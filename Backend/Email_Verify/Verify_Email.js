@@ -18,8 +18,8 @@ export const verifyEmail = async (token, email) => {
         html: `
             <h3>Welcome to ElectroMart!</h3>
             <p>Please click the link below to verify your email:</p>
-            <a href="https://electromart-frontend-beige.vercel.app/verify/${token}">Verify My Email</a>
-            <p>If the link doesn't work, copy paste this: https://electromart-frontend-beige.vercel.app/verify/${token}</p>
+            <a href="https://electro-mart-store.vercel.app/verify/${token}">Verify My Email</a>
+            <p>If the link doesn't work, copy paste this: https://electro-mart-store.vercel.app/verify/${token}</p>
         `
     };
 
