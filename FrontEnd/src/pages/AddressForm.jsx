@@ -32,8 +32,22 @@ const AddressForm = () => {
 
     const handleSave = () => {
         // 1. Basic Empty Fields Validation
-        if (!formData.fullName || !formData.phone || !formData.email || !formData.address || !formData.city || !formData.zip || formData.state || formData.country) {
-            return toast.error("Please fill all required fields");
+        if (!formData.fullName) {
+            return toast.error("Full Name is required");
+        } else if (!formData.phone) {
+            return toast.error("Phone no is required");
+        } else if (!formData.email) {
+            return toast.error("Email is required");
+        } else if (!formData.address) {
+            return toast.error("Address is required");
+        } else if (!formData.city) {
+            return toast.error("City is required");
+        } else if (!formData.zip) {
+            return toast.error("zip code is required");
+        } else if (formData.state) {
+            return toast.error("State is required");
+        } else if (formData.country) {
+            return toast.error("Country is required");
         }
 
         // 2. Email Validation (Regex)
