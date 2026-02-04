@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import mongoose from 'mongoose';
 import passport from 'passport';
+import session from 'express-session';
 import userRoute from './Routes/UserRoutes.js';
 import ProductsRoutes from './Routes/ProductsRoutes.js'
 import CartRoutes from './Routes/CartRoutes.js'
@@ -23,7 +24,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true, 
   cookie: { 
-    secure: true, // Vercel is HTTPS
+    secure: true,
     sameSite: 'none' 
   }
 }));
