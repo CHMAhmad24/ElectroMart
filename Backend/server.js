@@ -1,8 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
 import mongoose from 'mongoose';
-import passport from 'passport';
-import session from 'express-session';
 import userRoute from './Routes/UserRoutes.js';
 import ProductsRoutes from './Routes/ProductsRoutes.js'
 import CartRoutes from './Routes/CartRoutes.js'
@@ -18,18 +16,6 @@ const app = express()
 const PORT = process.env.PORT || 8000
 
 app.use(express.json())
-app.set("trust proxy", 1);
-app.use(session({
-  secret: process.env.SECRET_KEY,
-  resave: false,
-  saveUninitialized: true, 
-  cookie: { 
-    secure: true,
-    sameSite: 'none' 
-  }
-}));
-app.use(passport.initialize());
-app.use(passport.session()); 
 app.use(cors({
   origin: "https://electro-mart-shop.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
