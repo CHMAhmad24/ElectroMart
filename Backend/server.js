@@ -19,7 +19,7 @@ app.use(express.json())
 
 // CORS Configuration Fixed
 app.use(cors({
-  origin: ["https://electro-mart-store.vercel.app", "http://localhost:5173"], // Comma added, slash removed
+  origin: "https://electro-mart-lyart.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
