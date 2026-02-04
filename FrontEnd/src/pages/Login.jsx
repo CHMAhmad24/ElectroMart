@@ -108,7 +108,7 @@ const Login = () => {
           <Button disabled={loading} type="submit" className="w-full cursor-pointer bg-blue-600 hover:bg-blue-800" onClick={submitHandler}>
             {loading ? <> <Loader2 className='h-4 w-4 animate-spin mr-2' /> Please wait </> : "Login"}
           </Button>
-          <Button disabled={loading} onClick={() => window.open("http://localhost:8000/api/v1/auth/google", "_self")} variant='outline' className='w-full cursor-pointer' >
+          <Button disabled={loading} onClick={() => window.open("https://electromart-backend-five.vercel.app/api/v1/auth/google", "_self")} variant='outline' className='w-full cursor-pointer' >
             <img src={Google} alt="" className='w-5' />
             Login With Google
           </Button>
