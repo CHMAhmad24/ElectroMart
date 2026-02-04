@@ -16,8 +16,6 @@ const app = express()
 const PORT = process.env.PORT || 8000
 
 app.use(express.json())
-
-// CORS Configuration Fixed
 app.use(cors({
   origin: "https://electro-mart-lyart.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -25,13 +23,11 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
 }));
 
-// OPTIONS request handler (Important for Production)
-app.options('*', cors());
-
 let isConnected = false
 const connectToDB = async () => {
     if (isConnected) return;
     try {
+        // Reduced timeout so it doesn't hang forever
         await mongoose.connect(process.env.MONGO_URI, {
             dbName: 'ElectroMartDB',
             serverSelectionTimeoutMS: 5000 
@@ -40,7 +36,7 @@ const connectToDB = async () => {
         console.log("MongoDB connected");
     } catch (error) {
         console.error("MongoDB connection error:", error);
-        throw error;
+        throw error; // Throw so the middleware can catch it
     }
 };
 
@@ -59,6 +55,6 @@ app.use('/api/v1/cart', CartRoutes)
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/order', orderRoutes)
 
+// do not use app.listen() in vercel
 app.get("/", (req, res) => res.send("ElectroMart API is live and connected."))
-
 export default app;
