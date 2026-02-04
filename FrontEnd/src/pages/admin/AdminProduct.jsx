@@ -82,7 +82,7 @@ const AdminProduct = () => {
 
         try {
             setLoading(true)
-            const res = await axios.put(`https://electromart-backend-sand.vercel.app/api/v1/products/update/${editProduct._id}`, formData, {
+            const res = await axios.put(`https://electromart-backend-five.vercel.app/api/v1/products/update/${editProduct._id}`, formData, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             })
             if (res.data.success) {
@@ -102,7 +102,7 @@ const AdminProduct = () => {
     const deleteProductHandler = async (productId) => {
         try {
             setDeleting(productId)
-            const res = await axios.delete(`https://electromart-backend-sand.vercel.app/api/v1/products/delete/${productId}`, {
+            const res = await axios.delete(`https://electromart-backend-five.vercel.app/api/v1/products/delete/${productId}`, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             })
             if (res.data.success) {

@@ -15,7 +15,7 @@ const AdminSales = () => {
   const fetchStats = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      const res = await axios.get("https://electromart-backend-sand.vercel.app/api/v1/order/sales", {
+      const res = await axios.get("https://electromart-backend-five.vercel.app/api/v1/order/sales", {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (res.data.success) {

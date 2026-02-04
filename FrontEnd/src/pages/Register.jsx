@@ -19,7 +19,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://electromart-backend-sand.vercel.app/api/users/s', formData);
+      const res = await axios.post('https://electromart-backend-five.vercel.app/api/users/s', formData);
       if (res.data.success) {
         alert('Registration successful! Click Login to continue.');
       } else {

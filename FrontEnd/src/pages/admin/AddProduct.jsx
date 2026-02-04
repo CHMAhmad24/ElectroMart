@@ -56,7 +56,7 @@ const AddProduct = () => {
 
     try {
       setLoading(true)
-      const res = await axios.post(`https://electromart-backend-sand.vercel.app/api/v1/products/add`, formData, {
+      const res = await axios.post(`https://electromart-backend-five.vercel.app/api/v1/products/add`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

@@ -20,7 +20,7 @@ const AuthSuccess = () => {
       if (accessToken) {
         localStorage.setItem("accessToken", accessToken)
         try {
-          const res = await axios.get(`https://electromart-backend-sand.vercel.appapi/v1/auth/me`, {
+          const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/auth/me`, {
             headers: {
               Authorization: `Bearer ${accessToken}`
             }

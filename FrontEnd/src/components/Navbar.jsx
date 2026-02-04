@@ -26,7 +26,7 @@ const Navbar = () => {
   const logoutHandle = async () => {
     try {
       setLoading(true);
-      const res = await axios.post('https://electromart-backend-sand.vercel.app/api/v1/user/logout', {}, {
+      const res = await axios.post('https://electromart-backend-five.vercel.app/api/v1/user/logout', {}, {
         headers: { Authorization: `Bearer ${accessToken}` },
         withCredentials: true
       })

@@ -68,7 +68,7 @@ const AddressForm = () => {
                 shipping: shipping
             };
 
-            const response = await axios.post("https://electromart-backend-sand.vercel.app/api/v1/order/place", orderData, {
+            const response = await axios.post("https://electromart-backend-five.vercel.app/api/v1/order/place", orderData, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
 

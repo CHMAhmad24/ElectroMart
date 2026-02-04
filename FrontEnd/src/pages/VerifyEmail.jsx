@@ -9,7 +9,7 @@ const VerifyEmail = () => {
 
     const verifyEmail = async () => {
         try {
-            const response = await axios.post(`https://electromart-backend-sand.vercel.app/api/v1/user/verify`, {}, {
+            const response = await axios.post(`https://electromart-backend-five.vercel.app/api/v1/user/verify`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

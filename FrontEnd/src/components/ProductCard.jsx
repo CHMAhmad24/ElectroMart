@@ -22,7 +22,7 @@ const ProductCard = ({ product, loading }) => {
         }
         try {
             setLoadings(true)
-            const res = await axios.post('https://electromart-backend-sand.vercel.app/api/v1/cart/add', { productId, quantity: 1 }, {
+            const res = await axios.post('https://electromart-backend-five.vercel.app/api/v1/cart/add', { productId, quantity: 1 }, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

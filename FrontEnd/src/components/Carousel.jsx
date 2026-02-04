@@ -46,7 +46,7 @@ const Carousel = () => {
   const fetchAllProducts = async () => {
     try {
       setLoading(true)
-      const res = await axios.get('https://electromart-backend-sand.vercel.app/api/v1/products/getAllProducts')
+      const res = await axios.get('https://electromart-backend-five.vercel.app/api/v1/products/getAllProducts')
       setProductsData(res.data.products)
     } catch (error) {
       console.log(error);

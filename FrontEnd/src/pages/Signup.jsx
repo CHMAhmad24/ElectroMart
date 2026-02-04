@@ -56,7 +56,7 @@ const Signup = () => {
 
         try {
             setLoading(true);
-            const res = await axios.post(`https://electromart-backend-sand.vercel.app/api/v1/user/register`, formData, {
+            const res = await axios.post(`https://electromart-backend-five.vercel.app/api/v1/user/register`, formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

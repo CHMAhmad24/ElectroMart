@@ -9,7 +9,7 @@ export const DataProvider = ({ children }) => {
   // fetching all products from api
   const fetchAllProducts = async () => {
     try {
-      const res = await axios.get('https://electromart-backend-sand.vercel.app/api/v1/products/getAllProducts')
+      const res = await axios.get('https://electromart-backend-five.vercel.app/api/v1/products/getAllProducts')
       console.log(res);
 
     } catch (error) {

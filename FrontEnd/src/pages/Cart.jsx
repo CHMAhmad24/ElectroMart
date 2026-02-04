@@ -22,7 +22,7 @@ const Cart = () => {
   const Tax = subtotal * 0.05 
   const Total = subtotal + shipping + Tax
 
-  const API = "https://electromart-backend-sand.vercel.app/api/v1/cart"
+  const API = "https://electromart-backend-five.vercel.app/api/v1/cart"
   const accessToken = localStorage.getItem("accessToken")
 
   const handleUpdateQuantity = async (productId, type) => {

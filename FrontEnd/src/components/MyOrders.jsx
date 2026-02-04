@@ -16,7 +16,7 @@ const MyOrders = () => {
 
         try {
             setLoading(true);
-            const res = await axios.get("https://electromart-backend-sand.vercel.app/api/v1/order/getMyorders", {
+            const res = await axios.get("https://electromart-backend-five.vercel.app/api/v1/order/getMyorders", {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

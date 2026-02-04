@@ -32,7 +32,7 @@ const Products = () => {
     const getAllProducts = async () => {
         try {
             setLoading(true)
-            const res = await axios.get(`https://electromart-backend-sand.vercel.app/api/v1/products/getAllProducts`)
+            const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/products/getAllProducts`)
             if (res.data.success) {
                 setAllProducts(res.data.products)
                 dispatch(setProducts(res.data.products))

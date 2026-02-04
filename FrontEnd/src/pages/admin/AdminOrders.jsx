@@ -11,7 +11,7 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`https://electromart-backend-sand.vercel.app/api/v1/order/all`, {
+      const { data } = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/order/all`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       if (data.success) setOrders(data.orders);
@@ -25,7 +25,7 @@ const AdminOrders = () => {
   const handleStatusUpdate = async (orderId, newStatus) => {
     try {
       const { data } = await axios.put(
-        `https://electromart-backend-sand.vercel.app/api/v1/order/status`,
+        `https://electromart-backend-five.vercel.app/api/v1/order/status`,
         { orderId, status: newStatus },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );

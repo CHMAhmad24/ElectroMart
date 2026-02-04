@@ -115,7 +115,7 @@ const Profile = () => {
                 formData.append("file", file);
             }
 
-            const res = await axios.put(`https://electromart-backend-sand.vercel.app/api/v1/user/update/${userId}`, formData, {
+            const res = await axios.put(`https://electromart-backend-five.vercel.app/api/v1/user/update/${userId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "multipart/form-data"

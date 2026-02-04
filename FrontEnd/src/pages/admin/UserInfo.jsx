@@ -58,7 +58,7 @@ const UserInfo = () => {
 
       if (file) formData.append("file", file);
 
-      const res = await axios.put(`https://electromart-backend-sand.vercel.app/api/v1/user/update/${userId}`, formData, {
+      const res = await axios.put(`https://electromart-backend-five.vercel.app/api/v1/user/update/${userId}`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "multipart/form-data"
@@ -83,7 +83,7 @@ const UserInfo = () => {
 
   const getUserDetails = async () => {
     try {
-      const res = await axios.get(`https://electromart-backend-sand.vercel.app/api/v1/user/getUserById/${userId}`)
+      const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/user/getUserById/${userId}`)
       if (res.data.success) {
         setUpdateUser(prevState => ({ ...prevState, ...res.data.user }));
       }

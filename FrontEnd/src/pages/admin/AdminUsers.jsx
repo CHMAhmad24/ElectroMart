@@ -19,7 +19,7 @@ const AdminUsers = () => {
   const getAllUsers = async () => {
     const accessToken = localStorage.getItem("accessToken")
     try {
-      const res = await axios.get(`https://electromart-backend-sand.vercel.app/api/v1/user/allUsers`, {
+      const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/user/allUsers`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
