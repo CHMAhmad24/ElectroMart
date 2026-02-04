@@ -85,7 +85,7 @@ const AddressForm = () => {
     };
 
     return (
-        <div className='bg-gray-50 pt-15 pb-12 px-4 sm:px-6 lg:px-8'>
+        <div className='bg-gray-50 pt-20 pb-12 px-4 sm:px-6 lg:px-8'>
             <div className='max-w-7xl mx-auto'>
                 <h1 className='text-2xl md:text-3xl font-bold text-gray-900 mb-8'>Checkout</h1>
                 <div className='flex flex-col lg:flex-row gap-8 items-start'>
