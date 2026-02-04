@@ -91,7 +91,7 @@ const FilterSideBar = ({
             setBrand(value);
             handleMobileClose(false);
           }}
-          >
+        >
           <SelectTrigger className="w-full h-11 bg-white border-slate-200 text-black shadow-sm transition-all duration-200 rounded-xl cursor-pointer focus:border-none">
             <SelectValue placeholder="Select a Brand" className='text-black ' />
           </SelectTrigger>
@@ -121,6 +121,7 @@ const FilterSideBar = ({
       </div>
 
       {/* Price Range */}
+      {/* Price Range */}
       <div className='mb-6'>
         <h1 className='font-semibold text-lg mb-2 text-gray-800'>Price Range</h1>
         <div className='bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4'>
@@ -137,20 +138,32 @@ const FilterSideBar = ({
           </div>
 
           <div className='px-1'>
-            {/* Min Price Slider */}
+            {/* Min Price Slider (Max: 1000) */}
             <input
-              type="range" min="0" max="1000" step="100" value={priceRange[0]} onChange={handleMinChange}
+              type="range"
+              min="0"
+              max="1000"
+              step="10"
+              value={priceRange[0]}
+              onChange={handleMinChange}
               style={{
-                background: `linear-gradient(to right, #2563eb 0%, #2563eb ${(priceRange[0] / 5000) * 100}%, #e5e7eb ${(priceRange[0] / 5000) * 100}%, #e5e7eb 100%)`,
+                // (Current Value / Max Value) * 100
+                background: `linear-gradient(to right, #2563eb 0%, #2563eb ${(priceRange[0] / 1000) * 100}%, #e5e7eb ${(priceRange[0] / 1000) * 100}%, #e5e7eb 100%)`,
               }}
               className='w-full h-1.5 rounded-lg appearance-none cursor-pointer accent-blue-600 mb-4'
             />
 
-            {/* Max Price Slider */}
+            {/* Max Price Slider (Max: 9999) */}
             <input
-              type="range" min="0" max="9999" step="1000" value={priceRange[1]} onChange={handleMaxChange}
+              type="range"
+              min="0"
+              max="9999"
+              step="100"
+              value={priceRange[1]}
+              onChange={handleMaxChange}
               style={{
-                background: `linear-gradient(to right, #2563eb 0%, #2563eb ${(priceRange[1] / 999999) * 100}%, #e5e7eb ${(priceRange[1] / 999999) * 100}%, #e5e7eb 100%)`,
+                // (Current Value / Max Value) * 100
+                background: `linear-gradient(to right, #2563eb 0%, #2563eb ${(priceRange[1] / 9999) * 100}%, #e5e7eb ${(priceRange[1] / 9999) * 100}%, #e5e7eb 100%)`,
               }}
               className='w-full h-1.5 rounded-lg appearance-none cursor-pointer accent-blue-600'
             />
