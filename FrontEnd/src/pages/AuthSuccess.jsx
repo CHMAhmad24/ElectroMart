@@ -44,7 +44,6 @@ const AuthSuccess = () => {
   }, [navigate, dispatch])
   return (
     <div>
-      <h3>Navbar</h3>
       {user ? (
         <p>Welcome, {user.name}</p>
       ) : (
