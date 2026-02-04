@@ -125,7 +125,7 @@ const FilterSideBar = ({
         <h1 className='font-semibold text-lg mb-2 text-gray-800'>Price Range</h1>
         <div className='bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4'>
           <p className='text-xs text-blue-700 font-bold'>
-            Rs {priceRange[0].toLocaleString()} - Rs {priceRange[1].toLocaleString()}
+            $ {priceRange[0].toLocaleString()} - $ {priceRange[1].toLocaleString()}
           </p>
         </div>
 
