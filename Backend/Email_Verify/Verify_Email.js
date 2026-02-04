@@ -15,12 +15,11 @@ export const verifyEmail = async (token, email) => {
         to: email,
         subject: 'Email Verification - ElectroMart',
         // HTML use karein taake link clickable ho email mein
-        html: `
-            <h3>Welcome to ElectroMart!</h3>
-            <p>Please click the link below to verify your email:</p>
-            <a href="https://electro-mart-shop.vercel.app/verify/${token}">Verify My Email</a>
-            <p>If the link doesn't work, copy paste this: https://electro-mart-shop.vercel.app/verify/${token}</p>
-        `
+        text: `Hi! There, You have recently visited 
+           our website and entered your email.
+           Please follow the given link to verify your email
+           https://electro-mart-shop.vercel.app/verify/${token} 
+           Thanks`
     };
 
     // Vercel/Serverless ke liye wrap in a Promise
