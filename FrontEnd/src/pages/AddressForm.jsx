@@ -32,26 +32,27 @@ const AddressForm = () => {
 
     const handleSave = () => {
         // 1. Basic Empty Fields Validation
-        if (!fullName || !phone || !email || !address || !city || !zip) {
+        if (!formData.fullName || !formData.phone || !formData.email || !formData.address || !formData.city || !formData.zip || formData.state || formData.country) {
             return toast.error("Please fill all required fields");
         }
 
         // 2. Email Validation (Regex)
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
+        if (!emailRegex.test(formData.email)) {
             return toast.error("Please enter a valid email address");
         }
 
         // 3. Phone Number Validation (Sirf numbers aur length 10-15)
         const phoneRegex = /^\+?[0-9]{10,15}$/;
-        if (!phoneRegex.test(phone)) {
+        if (!phoneRegex.test(formData.phone)) {
             return toast.error("Enter a valid phone number (10-15 digits)");
         }
 
         // 4. Zip Code Validation (Minimum 5 characters)
-        if (zip.length < 5) {
+        if (formData.zip.length < 5) {
             return toast.error("Zip code must be at least 5 characters long");
         }
+        
         dispatch(addAddress(formData))
         setShowForm(false)
         setFormData({ fullName: "", phone: "", email: "", address: "", city: "", state: "", zip: "", country: "" })
