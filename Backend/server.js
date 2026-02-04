@@ -22,12 +22,14 @@ app.set("trust proxy", 1);
 app.use(express.json())
 
 app.use(session({
-  secret: process.env.SECRET_KEY || 'electromart_secret',
+  secret: process.env.SECRET_KEY,
   resave: false,
   saveUninitialized: true,
+  proxy: true,
   cookie: { 
-    secure: true, 
-    sameSite: 'none' 
+    secure: true,
+    sameSite: 'none',
+    maxAge: 24 * 60 * 60 * 1000 
   }
 }));
 
