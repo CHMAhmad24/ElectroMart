@@ -40,7 +40,7 @@ const FilterSideBar = ({
     setSearch("")
     setCategory("All")
     setBrand("All")
-    setPriceRAnge([0, 999999])
+    setPriceRAnge([0, 9999])
     handleMobileClose();
   }
 
@@ -139,7 +139,7 @@ const FilterSideBar = ({
           <div className='px-1'>
             {/* Min Price Slider */}
             <input
-              type="range" min="0" max="5000" step="100" value={priceRange[0]} onChange={handleMinChange}
+              type="range" min="0" max="1000" step="100" value={priceRange[0]} onChange={handleMinChange}
               style={{
                 background: `linear-gradient(to right, #2563eb 0%, #2563eb ${(priceRange[0] / 5000) * 100}%, #e5e7eb ${(priceRange[0] / 5000) * 100}%, #e5e7eb 100%)`,
               }}
@@ -148,7 +148,7 @@ const FilterSideBar = ({
 
             {/* Max Price Slider */}
             <input
-              type="range" min="0" max="999999" step="1000" value={priceRange[1]} onChange={handleMaxChange}
+              type="range" min="0" max="9999" step="1000" value={priceRange[1]} onChange={handleMaxChange}
               style={{
                 background: `linear-gradient(to right, #2563eb 0%, #2563eb ${(priceRange[1] / 999999) * 100}%, #e5e7eb ${(priceRange[1] / 999999) * 100}%, #e5e7eb 100%)`,
               }}
