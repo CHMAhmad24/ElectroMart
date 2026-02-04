@@ -16,6 +16,17 @@ const app = express()
 const PORT = process.env.PORT || 8000
 
 app.use(express.json())
+
+app.use(session({
+  secret: process.env.SECRET_KEY,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false } // Local testing ke liye false, production (https) ke liye true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(cors({
   origin: "https://electro-mart-shop.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
