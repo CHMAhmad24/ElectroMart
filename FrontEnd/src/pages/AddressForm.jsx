@@ -31,12 +31,31 @@ const AddressForm = () => {
     }
 
     const handleSave = () => {
-        if (!formData.fullName || !formData.address || !formData.city) {
-            return toast.error("Please fill required fields");
+        // 1. Basic Empty Fields Validation
+        if (!fullName || !phone || !email || !address || !city || !zip) {
+            return toast.error("Please fill all required fields");
+        }
+
+        // 2. Email Validation (Regex)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return toast.error("Please enter a valid email address");
+        }
+
+        // 3. Phone Number Validation (Sirf numbers aur length 10-15)
+        const phoneRegex = /^\+?[0-9]{10,15}$/;
+        if (!phoneRegex.test(phone)) {
+            return toast.error("Enter a valid phone number (10-15 digits)");
+        }
+
+        // 4. Zip Code Validation (Minimum 5 characters)
+        if (zip.length < 5) {
+            return toast.error("Zip code must be at least 5 characters long");
         }
         dispatch(addAddress(formData))
         setShowForm(false)
         setFormData({ fullName: "", phone: "", email: "", address: "", city: "", state: "", zip: "", country: "" })
+        toast.success("Address saved successfully!");
     }
 
     const subtotal = cart?.totalPrice || 0
@@ -153,7 +172,7 @@ const AddressForm = () => {
                                                             {addr.address}, {addr.city}, {addr.state}
                                                         </p>
                                                     </div>
-                                                    <button 
+                                                    <button
                                                         onClick={(e) => { e.stopPropagation(); dispatch(deleteAddress(index)); }}
                                                         className='absolute top-3 right-3 p-2 text-gray-400 hover:text-red-600 transition-colors cursor-pointer'
                                                     >
@@ -198,9 +217,9 @@ const AddressForm = () => {
                                     <span>$ {total.toLocaleString()}</span>
                                 </div>
 
-                                <Button 
-                                    disabled={selectedAddress === null || loading || showForm} 
-                                    onClick={handlePlaceOrder} 
+                                <Button
+                                    disabled={selectedAddress === null || loading || showForm}
+                                    onClick={handlePlaceOrder}
                                     className='w-full bg-blue-600 hover:bg-blue-700 py-6 mt-4 text-lg font-semibold rounded-xl cursor-pointer'
                                 >
                                     {loading ? (
@@ -209,7 +228,7 @@ const AddressForm = () => {
                                         <><ShoppingCart className="mr-2 h-5 w-5" /> Place Order</>
                                     )}
                                 </Button>
-                                
+
                                 <p className='text-[12px] text-center text-gray-600 mt-4'>
                                     By placing your order, you agree to our Terms of Services.
                                 </p>
