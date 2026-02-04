@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     Facebook,
     Twitter,
@@ -8,11 +8,30 @@ import {
     Phone,
     MapPin
 } from "lucide-react";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { setProducts } from '@/ReduxToolkit/productSlice';
+import axios from 'axios';
+
 
 const Footer = () => {
+    const dispatch = useDispatch()
     const { products } = useSelector(store => store.product)
+    useEffect(() => {
+        const getAllProducts = async () => {
+            try {
+                const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/products/getAllProducts`)
+                if (res.data.success) {
+                    dispatch(setProducts(res.data.products))
+                }
+            } catch (error) {
+                console.log(error)
+                toast.error("Failed to load products")
+            }
+        }
+        getAllProducts();
+    }, [])
     const navigate = useNavigate();
     const categories = products?.length > 0
         ? [...new Set(products.map(p => p.category))]
