@@ -21,7 +21,7 @@ app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false } // Local testing ke liye false, production (https) ke liye true
+  cookie: { secure: true } // Local testing ke liye false, production (https) ke liye true
 }));
 
 app.use(passport.initialize());
