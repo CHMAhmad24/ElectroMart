@@ -17,6 +17,18 @@ const app = express()
 const PORT = process.env.PORT || 8000
 
 app.use(express.json())
+app.set("trust proxy", 1);
+app.use(session({
+  secret: process.env.SECRET_KEY,
+  resave: false,
+  saveUninitialized: true, 
+  cookie: { 
+    secure: true, // Vercel is HTTPS
+    sameSite: 'none' 
+  }
+}));
+app.use(passport.initialize());
+app.use(passport.session()); 
 app.use(cors({
   origin: "https://electro-mart-shop.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
