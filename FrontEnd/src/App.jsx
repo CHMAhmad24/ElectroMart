@@ -70,7 +70,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/address',
-    element: <ProtectedRoute><AddressForm /></ProtectedRoute>,
+    element: <ProtectedRoute><Navbar /><AddressForm /></ProtectedRoute>,
   },
   {
     path: '/order-success',
