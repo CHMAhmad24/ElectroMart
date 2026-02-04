@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 8000
 
 app.use(express.json())
 app.use(cors({
-  origin: "https://electro-mart-lyart.vercel.app",
+  origin: "https://electro-mart-shop.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
