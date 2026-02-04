@@ -23,7 +23,7 @@ const Products = () => {
     const [search, setSearch] = useState("")
     const [category, setCategory] = useState("All")
     const [brand, setBrand] = useState("All")
-    const [priceRange, setPriceRAnge] = useState([0, 999999])
+    const [priceRange, setPriceRAnge] = useState([0, 9999])
     const [sortOrder, setSortOrder] = useState('')
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     const [showGoTop, setShowGoTop] = useState(false)
