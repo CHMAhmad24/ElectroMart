@@ -5,7 +5,7 @@ import { user as User } from "../Models/userModel.js"
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/api/v1/auth/google/callback"
+    callbackURL: "https://electromart-backend-five.vercel.app/api/v1/auth/google/callback"
 },
     async (accessToken, refreshToken, profile, cb) => {
         console.log(profile)
