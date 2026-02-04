@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
             return !this.googleId; // password required only if NOT a Google user
         }
     },
-    username: { type: String, unique: true },
+    username: { type: String, unique: true, sparse: true },
     googleId: { type: String },
     avatar: { type: String },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
