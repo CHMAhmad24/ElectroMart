@@ -44,9 +44,9 @@ const AddressForm = () => {
             return toast.error("City is required");
         } else if (!formData.zip) {
             return toast.error("zip code is required");
-        } else if (formData.state) {
+        } else if (!formData.state) {
             return toast.error("State is required");
-        } else if (formData.country) {
+        } else if (!formData.country) {
             return toast.error("Country is required");
         }
 
