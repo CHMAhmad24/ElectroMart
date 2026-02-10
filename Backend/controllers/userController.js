@@ -491,3 +491,21 @@ export const updateUser = async (req, res) => {
         })
     }
 }
+
+export const toggleSubscription = async (req, res) => {
+    try {
+        const user = await User.findById(req.id);
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        user.isSubscribed = !user.isSubscribed; // Toggle logic (subscribe/unsubscribe)
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: user.isSubscribed ? "Subscribed successfully" : "Unsubscribed successfully",
+            isSubscribed: user.isSubscribed
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
