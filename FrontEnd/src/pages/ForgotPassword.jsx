@@ -20,6 +20,16 @@ const ForgotPassword = () => {
 
     // Step 1: Send OTP
     const handleSendOTP = async () => {
+        // Email Validation Regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!email) {
+            return toast.error("Email is required");
+        }
+
+        if (!emailRegex.test(email)) {
+            return toast.error("Please enter a valid email address");
+        }
         try {
             setLoading(true);
             const res = await axios.post(`${BASE_URL}/forgotPassword`, { email });
