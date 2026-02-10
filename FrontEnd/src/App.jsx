@@ -24,6 +24,7 @@ import AuthSuccess from './pages/AuthSuccess'
 import AddressForm from './pages/AddressForm'
 import OrderSuccess from './pages/OrderSuccess'
 import Login_Signup from './pages/Login_Signup'
+import ForgotPassword from './pages/ForgotPassword'
 // import Hero from './components/Hero'
 // import Features from './components/Features'
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: '/verify',
     element: <><Verify /></>,
+  },
+  {
+    path: '/forgot-password',
+    element: <><ForgotPassword /></>,
   },
   {
     path: '/profile/:Id',
