@@ -14,7 +14,6 @@ import { toast } from 'sonner';
 import { setProducts } from '@/ReduxToolkit/productSlice';
 import axios from 'axios';
 import { setUser } from '@/ReduxToolkit/userSlice';
-import { Button } from './ui/button';
 
 const Footer = () => {
     const [loading, setLoading] = useState()
@@ -169,7 +168,7 @@ const Footer = () => {
                                     className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-colors"
                                 />
                             )}
-                            <Button
+                            <button
                                 onClick={handleSubscription}
                                 disabled={loading}
                                 className={`cursor-pointer w-full font-bold py-3 rounded-lg transition-all shadow-lg active:scale-95 ${user?.isSubscribed
@@ -178,7 +177,7 @@ const Footer = () => {
                                     }`}
                             >
                                 {loading ? "Processing..." : (user?.isSubscribed ? "Unsubscribe" : "Subscribe")}
-                            </Button>
+                            </button>
                         </div>
 
                         {/* Social Icons matching the layout alignment */}
