@@ -37,6 +37,8 @@ const Footer = () => {
     }, [])
 
     const handleSubscription = async () => {
+        const userId = user?._id; // Pehle hi nikal lo
+
         if (!user) {
             return toast.error("User not found. Please login again.");
         }
@@ -45,7 +47,7 @@ const Footer = () => {
         }
         try {
             setLoading(true);
-            const url = `https://electromart-backend-five.vercel.app/api/v1/user/subscription/${user._id}`;
+            const url = `https://electromart-backend-five.vercel.app/api/v1/user/subscription/${userId}`;
 
             console.log("Requesting URL:", url); // Console mein check karein URL kaisa dikh raha hai
 
