@@ -37,8 +37,21 @@ const Footer = () => {
     ? [
         ...new Set(
             products
-                .map(p => p.category?.trim()) // Extra spaces khatam karein
-                .filter(Boolean) // Khali categories ko remove karein
+                .map(p => {
+                    let cat = p.category?.trim().toLowerCase();
+                    if (!cat) return null;
+
+                    // Sabko plural (s/es) mein convert karne ka logic taake duplicates merge ho jayein
+                    if (!cat.endsWith('s')) {
+                        if (cat.endsWith('ch') || cat.endsWith('sh')) {
+                            cat += 'es'; // Watch -> Watches
+                        } else {
+                            cat += 's'; // Mobile -> Mobiles
+                        }
+                    }
+                    return cat;
+                })
+                .filter(cat => cat !== null && cat !== "all") // "All" aur null ko yahan nikal diya
         )
       ]
     : [];
