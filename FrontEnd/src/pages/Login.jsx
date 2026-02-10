@@ -41,6 +41,13 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true);
+      if (!formData.email) {
+        return toast.error("Email is required");
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        return toast.error("Please enter a valid email address");
+      }
       const res = await axios.post(`https://electromart-backend-five.vercel.app/api/v1/user/login`, formData, {
         headers: {
           'Content-Type': 'application/json'
@@ -81,6 +88,9 @@ const Login = () => {
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
+                <Link to="/forgot-password" title='Forgot Password?' className="text-sm text-blue-600 hover:underline">
+                  Forgot password?
+                </Link>
               </div>
               <div className='relative'>
                 <Input
