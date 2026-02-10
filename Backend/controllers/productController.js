@@ -7,33 +7,32 @@ import getDataUri from "../utils/dataUri.js";
 
 export const addProduct = async (req, res) => {
     try {
-        const { productName, productDesc, productPrice, category, brand } = req.body
-        const userId = req.id
+        const { productName, productDesc, productPrice, category, brand } = req.body;
+        const userId = req.id;
 
         if (!productName || !productDesc || !productPrice || !category || !brand) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
-            })
+            });
         }
 
-        //Handle multiple images upload
-
+        // 1. Handle multiple images upload
         let productImg = [];
         if (req.files && req.files.length > 0) {
             for (let file of req.files) {
-                const fileUri = getDataUri(file)
-                const result = await cloudinary.uploader.upload(fileUri, {
-                    folder: "emart_products"        // cloudinary products folder name
-                })
+                const fileUri = getDataUri(file);
+                const result = await cloudinary.v2.uploader.upload(fileUri.content, {
+                    folder: "emart_products"
+                });
                 productImg.push({
                     url: result.secure_url,
                     public_id: result.public_id
-                })
+                });
             }
         }
 
-        // Create a product in DB
+        // 2. Create product in DB
         const newProduct = await Product.create({
             userId,
             productName,
@@ -41,52 +40,38 @@ export const addProduct = async (req, res) => {
             productPrice,
             category,
             brand,
-            productImg, //Array of objects [{url, public_id},{url, public_id}]
-        })
+            productImg,
+        });
 
+        // 3. Subscribed users ko dhoondein
+        // Yahan 'User' use ho raha hai, isliye import zaroori hai
         const subscribers = await User.find({ isSubscribed: true }).select("email firstName");
+
         if (subscribers.length > 0) {
-            // Saare subscribers ke liye email promises create karein
             const emailPromises = subscribers.map(subscriber => {
                 return sendEmail({
                     email: subscriber.email,
-                    subject: `New Product: ${productName} is now available!`,
-                    html: `
-                        <div style="font-family: Arial, sans-serif; border: 1px solid #ddd; padding: 20px;">
-                            <h2>Hello ${subscriber.firstName || 'Valued Customer'},</h2>
-                            <p>We have just added a new product in the <b>${category}</b> category!</p>
-                            <hr />
-                            <h3>${productName}</h3>
-                            <p>${productDesc}</p>
-                            <p><b>Price:</b> Rs. ${productPrice}</p>
-                            <img src="${productImg[0]?.url}" alt="${productName}" style="width: 200px; height: auto;" />
-                            <br />
-                            <a href="${process.env.FRONTEND_URL}/product/${newProduct._id}" 
-                               style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;">
-                               View Product
-                            </a>
-                        </div>
-                    `
+                    subject: `New Arrival: ${productName}`,
+                    html: `<h1>Hi ${subscriber.firstName}, New product added!</h1>`
                 });
             });
-
-            // Parallelly saari emails bhejhein
-            // Note: Use Promise.allSettled agar aap chahte hain ke ek email fail hone par baki na ruken
             await Promise.allSettled(emailPromises);
         }
-        
+
         return res.status(200).json({
             success: true,
             message: 'Product Added Successfully',
             product: newProduct
-        })
+        });
+
     } catch (error) {
+        // console.error(error); // Debugging ke liye server console check karein
         return res.status(500).json({
             success: false,
-            message: error.message
-        })
+            message: error.message // Ab yahan 'User is not defined' nahi aayega
+        });
     }
-}
+};
 
 export const getAllProducts = async (_, res) => {
     try {
