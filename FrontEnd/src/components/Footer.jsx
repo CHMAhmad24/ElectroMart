@@ -36,9 +36,9 @@ const Footer = () => {
         getAllProducts();
     }, [])
 
-    const accessToken = localStorage.getItem("accessToken");
     const handleSubscription = async () => {
-        const userId = user?._id; // Pehle hi nikal lo
+        const userId = user?._id;
+        const accessToken = localStorage.getItem("accessToken");
 
         if (!user) {
             return toast.error("User not found. Please login again.");
@@ -50,11 +50,11 @@ const Footer = () => {
             setLoading(true);
             const url = `https://electromart-backend-five.vercel.app/api/v1/user/subscription/${userId}`;
 
-            console.log("Requesting URL:", url); // Console mein check karein URL kaisa dikh raha hai
+            console.log("Requesting URL:", url);
 
             const res = await axios.put(url, {}, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}` // 'Bearer ' ke baad space ka khayal rakhein
+                    Authorization: `Bearer ${accessToken}`
                 }
             });
 
