@@ -17,10 +17,11 @@ import { setUser } from '@/ReduxToolkit/userSlice';
 import { Button } from './ui/button';
 
 const Footer = () => {
-    const [loading, setLoading] = useState()
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState()
     const { products } = useSelector(store => store.product)
     const { user } = useSelector(store => store.user)
+    const accessToken = localStorage.getItem("accessToken");
     useEffect(() => {
         const getAllProducts = async () => {
             try {
@@ -51,7 +52,11 @@ const Footer = () => {
 
             console.log("Requesting URL:", url); // Console mein check karein URL kaisa dikh raha hai
 
-            const res = await axios.put(url, {}, { withCredentials: true });
+            const res = await axios.put(url, {}, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}` // 'Bearer ' ke baad space ka khayal rakhein
+                }
+            });
 
             if (res.data.success) {
                 toast.success(res.data.message);
