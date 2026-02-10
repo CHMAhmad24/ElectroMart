@@ -136,7 +136,7 @@ const ForgotPassword = () => {
 
                             <Input
                                 placeholder="Confirm Password"
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 value={passwords.confirmPassword}
                                 onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })}
                             />
