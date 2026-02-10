@@ -17,11 +17,10 @@ import { setUser } from '@/ReduxToolkit/userSlice';
 import { Button } from './ui/button';
 
 const Footer = () => {
-    const dispatch = useDispatch()
     const [loading, setLoading] = useState()
+    const dispatch = useDispatch()
     const { products } = useSelector(store => store.product)
     const { user } = useSelector(store => store.user)
-    const accessToken = localStorage.getItem("accessToken");
     useEffect(() => {
         const getAllProducts = async () => {
             try {
@@ -37,6 +36,7 @@ const Footer = () => {
         getAllProducts();
     }, [])
 
+    const accessToken = localStorage.getItem("accessToken");
     const handleSubscription = async () => {
         const userId = user?._id; // Pehle hi nikal lo
 
