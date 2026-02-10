@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import { setProducts } from '@/ReduxToolkit/productSlice';
 import axios from 'axios';
 import { setUser } from '@/ReduxToolkit/userSlice';
+import { Button } from './ui/button';
 
 const Footer = () => {
     const [loading, setLoading] = useState()
@@ -36,17 +37,19 @@ const Footer = () => {
     }, [])
 
     const handleSubscription = async () => {
-        if (!user || !user._id) {
+        if (!user) {
             return toast.error("User not found. Please login again.");
         }
-
+        if (!user?._id) {
+            return toast.error("User ID not found. Please login again.");
+        }
         try {
             setLoading(true);
-            const res = await axios.put(
-                `https://electromart-backend-five.vercel.app/api/v1/user/subscription/${user._id}`,
-                {},
-                { withCredentials: true }
-            );
+            const url = `https://electromart-backend-five.vercel.app/api/v1/user/subscription/${user._id}`;
+
+            console.log("Requesting URL:", url); // Console mein check karein URL kaisa dikh raha hai
+
+            const res = await axios.put(url, {}, { withCredentials: true });
 
             if (res.data.success) {
                 toast.success(res.data.message);
@@ -169,16 +172,16 @@ const Footer = () => {
                                     className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-colors"
                                 />
                             )}
-                            <button
+                            <Button
                                 onClick={handleSubscription}
                                 disabled={loading}
                                 className={`cursor-pointer w-full font-bold py-3 rounded-lg transition-all shadow-lg active:scale-95 ${user?.isSubscribed
-                                        ? "bg-gray-800 text-gray-400 border border-gray-700"
-                                        : "bg-[linear-gradient(to_right,#2563eb,#9333ea)] text-white"
+                                    ? "bg-gray-800 text-gray-400 border border-gray-700"
+                                    : "bg-[linear-gradient(to_right,#2563eb,#9333ea)] text-white"
                                     }`}
                             >
                                 {loading ? "Processing..." : (user?.isSubscribed ? "Unsubscribe" : "Subscribe")}
-                            </button>
+                            </Button>
                         </div>
 
                         {/* Social Icons matching the layout alignment */}
