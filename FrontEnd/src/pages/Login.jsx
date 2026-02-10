@@ -86,7 +86,7 @@ const Login = () => {
               <Input id="email" name="email" value={formData.email} onChange={handleChange} type="email" placeholder="m@example.com" required />
             </div>
             <div className="grid gap-2">
-              <div className="flex items-center">
+              <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
                 <Link to="/forgot-password" title='Forgot Password?' className="text-sm text-blue-600 hover:underline">
                   Forgot password?
