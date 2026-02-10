@@ -27,7 +27,7 @@ export const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await User.create({ firstName, lastName, email, password: hashedPassword });
-        const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, { expiresIn: '10m' });
+        const token = jwt.sign({ id: newUser._id }, process.env.SECRET_KEY, { expiresIn: '5d' });
         try {
             await verifyEmail(token, email); // Send verification email
             console.log("Verification email triggered successfully");
