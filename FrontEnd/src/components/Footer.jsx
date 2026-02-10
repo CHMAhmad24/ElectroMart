@@ -34,7 +34,7 @@ const Footer = () => {
     }, [])
     const navigate = useNavigate();
     const categories = products?.length > 0
-        ? ["All", ...new Set(products.map(p => p.category))]
+        ? ["", ...new Set(products.map(p => p.category))]
         : [];
     return (
         <footer className="bg-[linear-gradient(to_bottom_right,#111827,#1f2937,#000)] h-max text-white py-14 px-6 lg:px-24">
