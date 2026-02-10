@@ -37,9 +37,8 @@ const Footer = () => {
     }, [])
 
     const handleSubscription = async () => {
-        if (!user) {
-            toast.error("Please login to subscribe!");
-            return navigate("/login");
+        if (!user || !user._id) {
+            return toast.error("User not found. Please login again.");
         }
 
         try {
