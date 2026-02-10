@@ -18,7 +18,7 @@ const Cart = () => {
   const [removeLoadingId, setRemoveLoadingId] = useState(null)
   const { cart } = useSelector((store) => store.product)
   const subtotal = cart?.totalPrice
-  const shipping = subtotal > 10 ? 0 : 10
+  const shipping = subtotal > 50 ? 0 : 5
   const Tax = subtotal * 0.05 
   const Total = subtotal + shipping + Tax
 
