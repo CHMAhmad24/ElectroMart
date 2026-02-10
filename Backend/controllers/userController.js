@@ -131,67 +131,75 @@ export const reVerify = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+
         if (!email || !password) {
             return res.status(400).json({
                 success: false,
                 message: "Email and Password are required"
-            })
+            });
         }
-        const existingUser = await User.findOne({ email }).select("-password");
+
+        // 1. Database se user find karte waqt hi password aur unwanted fields ko hata denge
+        // Lekin password check karne ke liye humein password chahiye hoga
+        const existingUser = await User.findOne({ email });
+
         if (!existingUser) {
             return res.status(400).json({
                 success: false,
                 message: "User does not exist"
-            })
+            });
         }
+
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
         if (!isPasswordCorrect) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid credentials"
-            })
+            });
         }
+
         if (existingUser.isVerified === false) {
             return res.status(400).json({
                 success: false,
                 message: "Verify your email to login"
-            })
+            });
         }
 
-        // Generate token
-        const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '5d' });
-        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
+        // 2. Token Generation (Logic corrected: Access 1d, Refresh 7d)
+        const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
+        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '7d' });
 
         existingUser.isLoggedIn = true;
         await existingUser.save();
 
-        // check for existing session and delete it
-        const existingSession = await Session.findOne({ userId: existingUser._id });
-        if (existingSession) {
-            await Session.deleteOne({ userId: existingUser._id });
-        }
-
-        // create a new session
+        // Session management
+        await Session.deleteOne({ userId: existingUser._id });
         await Session.create({ userId: existingUser._id });
+
+        // 3. Sensitive information ko frontend par bhejne se pehle delete karna
         const userResponse = existingUser.toObject();
-        delete userResponse.password;
-        delete userResponse.verificationToken;
+        delete userResponse.password; // Password ko response se remove kiya
+        delete userResponse.otp;
+        delete userResponse.otpExpiry;
+        delete userResponse.token;
+
         return res.status(200).json({
             success: true,
             message: `Login successful. Welcome back ${existingUser.firstName}`,
-            user: existingUser,
+            user: userResponse, // Ab clean object jayega
             accessToken,
             refreshToken
-        })
-    }
-    catch (error) {
+        });
+
+    } catch (error) {
         res.status(500).json({
             success: false,
             message: "Login failed",
             error: error.message
-        })
+        });
     }
 }
+
 
 export const logout = async (req, res) => {
     try {
