@@ -66,9 +66,6 @@ export const addProduct = async (req, res) => {
                     `
                 });
             });
-
-            // Parallelly saari emails bhejhein
-            // Note: Use Promise.allSettled agar aap chahte hain ke ek email fail hone par baki na ruken
             await Promise.allSettled(emailPromises);
         }
         
