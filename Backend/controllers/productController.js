@@ -1,5 +1,7 @@
 import { Product } from "../Models/productModel.js";
-import { user as User } from "../models/userModel.js";
+import { user as User } from "../Models/userModel";
+import { sendEmail } from "../utils/sendEmail.js";
+import { getDataUri } from "../utils/dataUri.js";
 import cloudinary from "../utils/cloudinary.js";
 import getDataUri from "../utils/dataUri.js";
 
@@ -67,6 +69,9 @@ export const addProduct = async (req, res) => {
                     `
                 });
             });
+
+            // Parallelly saari emails bhejhein
+            // Note: Use Promise.allSettled agar aap chahte hain ke ek email fail hone par baki na ruken
             await Promise.allSettled(emailPromises);
         }
         
