@@ -33,7 +33,9 @@ const Footer = () => {
         getAllProducts();
     }, [])
     const navigate = useNavigate();
-    const categories = ["All", ...new Set(products.map(p => p.category))]
+    const categories = products?.length > 0
+        ? ["All", ...new Set(products.map(p => p.category))]
+        : [];
     return (
         <footer className="bg-[linear-gradient(to_bottom_right,#111827,#1f2937,#000)] h-max text-white py-14 px-6 lg:px-24">
             <div className="max-w-[1400px] mx-auto">
