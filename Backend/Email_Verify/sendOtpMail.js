@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import 'dotenv/config';
 
 
-export const sendOTPMail = async(email, otp) => {
+export const sendOTPMail = async (email, otp) => {
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -19,10 +19,13 @@ export const sendOTPMail = async(email, otp) => {
         html: `<p>Your OTP for password reset is <b>${otp}</b></p>`
     };
 
-    transporter.sendMail(mailConfigurations, function (error, info) {
-        if (error) throw Error(error);
-        console.log('OTP Sent Successfully');
-        console.log(info);
-    });
+    try {
+        const info = await transporter.sendMail(mailConfigurations);
+        console.log('OTP Sent Successfully:', info.messageId);
+        return info;
+    } catch (error) {
+        console.error('Nodemailer Error:', error);
+        throw error; // This ensures your controller's catch block triggers
+    }
 }
 
