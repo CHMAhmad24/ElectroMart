@@ -137,7 +137,7 @@ export const login = async (req, res) => {
                 message: "Email and Password are required"
             })
         }
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email }).select("-password -otp -otpExpiry -_id -token");
         if (!existingUser) {
             return res.status(400).json({
                 success: false,
@@ -173,6 +173,9 @@ export const login = async (req, res) => {
 
         // create a new session
         await Session.create({ userId: existingUser._id });
+        const userResponse = existingUser.toObject();
+        delete userResponse.password;
+        delete userResponse.verificationToken;
         return res.status(200).json({
             success: true,
             message: `Login successful. Welcome back ${existingUser.firstName}`,
