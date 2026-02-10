@@ -40,6 +40,38 @@ export const addProduct = async (req, res) => {
             brand,
             productImg, //Array of objects [{url, public_id},{url, public_id}]
         })
+
+        const subscribers = await User.find({ isSubscribed: true }).select("email firstName");
+        if (subscribers.length > 0) {
+            // Saare subscribers ke liye email promises create karein
+            const emailPromises = subscribers.map(subscriber => {
+                return sendEmail({
+                    email: subscriber.email,
+                    subject: `New Product: ${productName} is now available!`,
+                    html: `
+                        <div style="font-family: Arial, sans-serif; border: 1px solid #ddd; padding: 20px;">
+                            <h2>Hello ${subscriber.firstName || 'Valued Customer'},</h2>
+                            <p>We have just added a new product in the <b>${category}</b> category!</p>
+                            <hr />
+                            <h3>${productName}</h3>
+                            <p>${productDesc}</p>
+                            <p><b>Price:</b> Rs. ${productPrice}</p>
+                            <img src="${productImg[0]?.url}" alt="${productName}" style="width: 200px; height: auto;" />
+                            <br />
+                            <a href="${process.env.FRONTEND_URL}/product/${newProduct._id}" 
+                               style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;">
+                               View Product
+                            </a>
+                        </div>
+                    `
+                });
+            });
+
+            // Parallelly saari emails bhejhein
+            // Note: Use Promise.allSettled agar aap chahte hain ke ek email fail hone par baki na ruken
+            await Promise.allSettled(emailPromises);
+        }
+        
         return res.status(200).json({
             success: true,
             message: 'Product Added Successfully',
