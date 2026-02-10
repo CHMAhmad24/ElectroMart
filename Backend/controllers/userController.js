@@ -138,9 +138,7 @@ export const login = async (req, res) => {
                 message: "Email and Password are required"
             });
         }
-
-        // 1. Database se user find karte waqt hi password aur unwanted fields ko hata denge
-        // Lekin password check karne ke liye humein password chahiye hoga
+        
         const existingUser = await User.findOne({ email });
 
         if (!existingUser) {
