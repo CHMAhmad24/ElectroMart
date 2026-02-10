@@ -494,18 +494,40 @@ export const updateUser = async (req, res) => {
 
 export const toggleSubscription = async (req, res) => {
     try {
-        const user = await User.findById(req.id);
-        if (!user) return res.status(404).json({ message: "User not found" });
+        const userId = req.params.id; // Ya req.id agar aap logged-in user ka kar rahe hain
+        const loggedInUser = req.user; // isAuthenticated middleware se
 
-        user.isSubscribed = !user.isSubscribed; // Toggle logic (subscribe/unsubscribe)
-        await user.save();
+        // Authorization check: Sirf user khud ya admin status badal sakta hai
+        if (loggedInUser._id.toString() !== userId && loggedInUser.role !== 'admin') {
+            return res.status(403).json({
+                success: false,
+                message: "You are not authorized to change this subscription status"
+            });
+        }
 
-        res.status(200).json({
+        const foundUser = await User.findById(userId);
+        if (!foundUser) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+        
+        foundUser.isSubscribed = !foundUser.isSubscribed;
+        
+        await foundUser.save();
+
+        return res.status(200).json({
             success: true,
-            message: user.isSubscribed ? "Subscribed successfully" : "Unsubscribed successfully",
-            isSubscribed: user.isSubscribed
+            message: `Subscription ${foundUser.isSubscribed ? 'activated' : 'deactivated'} successfully`,
+            isSubscribed: foundUser.isSubscribed
         });
+
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        res.status(500).json({
+            success: false,
+            message: "Toggle subscription failed",
+            error: error.message
+        });
     }
 };
