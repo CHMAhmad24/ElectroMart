@@ -84,6 +84,7 @@ const Footer = () => {
             )
         ]
         : [];
+    console.log("Current User from Redux:", user);
     return (
         <footer className="bg-[linear-gradient(to_bottom_right,#111827,#1f2937,#000)] h-max text-white py-14 px-6 lg:px-24">
             <div className="max-w-[1400px] mx-auto">
