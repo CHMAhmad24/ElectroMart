@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Facebook,
     Twitter,
@@ -13,11 +13,14 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { setProducts } from '@/ReduxToolkit/productSlice';
 import axios from 'axios';
-
+import { setUser } from '@/ReduxToolkit/userSlice';
+import { Button } from './ui/button';
 
 const Footer = () => {
+    const [loading, setLoading] = useState()
     const dispatch = useDispatch()
     const { products } = useSelector(store => store.product)
+    const { user } = useSelector(store => store.user)
     useEffect(() => {
         const getAllProducts = async () => {
             try {
@@ -32,29 +35,57 @@ const Footer = () => {
         }
         getAllProducts();
     }, [])
+
+    const handleSubscription = async () => {
+        if (!user) {
+            toast.error("Please login to subscribe!");
+            return navigate("/login");
+        }
+
+        try {
+            setLoading(true);
+            const res = await axios.put(
+                `https://electromart-backend-five.vercel.app/api/v1/user/subscription/${user._id}`,
+                {},
+                { withCredentials: true }
+            );
+
+            if (res.data.success) {
+                toast.success(res.data.message);
+                const updatedUser = { ...user, isSubscribed: res.data.isSubscribed };
+                dispatch(setUser(updatedUser));
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || "Something went wrong");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const navigate = useNavigate();
     const categories = products?.length > 0
-    ? [
-        ...new Set(
-            products
-                .map(p => {
-                    let cat = p.category?.trim().toLowerCase();
-                    if (!cat) return null;
+        ? [
+            ...new Set(
+                products
+                    .map(p => {
+                        let cat = p.category?.trim().toLowerCase();
+                        if (!cat) return null;
 
-                    // Sabko plural (s/es) mein convert karne ka logic taake duplicates merge ho jayein
-                    if (!cat.endsWith('s')) {
-                        if (cat.endsWith('ch') || cat.endsWith('sh')) {
-                            cat += 'es'; // Watch -> Watches
-                        } else {
-                            cat += 's'; // Mobile -> Mobiles
+                        // Sabko plural (s/es) mein convert karne ka logic taake duplicates merge ho jayein
+                        if (!cat.endsWith('s')) {
+                            if (cat.endsWith('ch') || cat.endsWith('sh')) {
+                                cat += 'es'; // Watch -> Watches
+                            } else {
+                                cat += 's'; // Mobile -> Mobiles
+                            }
                         }
-                    }
-                    return cat;
-                })
-                .filter(cat => cat !== null && cat !== "all") // "All" aur null ko yahan nikal diya
-        )
-      ]
-    : [];
+                        return cat;
+                    })
+                    .filter(cat => cat !== null && cat !== "all") // "All" aur null ko yahan nikal diya
+            )
+        ]
+        : [];
     return (
         <footer className="bg-[linear-gradient(to_bottom_right,#111827,#1f2937,#000)] h-max text-white py-14 px-6 lg:px-24">
             <div className="max-w-[1400px] mx-auto">
@@ -120,20 +151,35 @@ const Footer = () => {
 
 
                     {/* 3. Newsletter & Socials */}
-                    <div className="flex-1 w-[300px] space-y-6 lg:max-w-sm ml-0 lg:ml-12">
-                        <h4 className="text-lg font-semibold">Stay Updated</h4>
+                    <div className="flex-1 w-75 space-y-6 lg:max-w-sm ml-0 lg:ml-12">
+                        <h4 className="text-lg font-semibold">
+                            {user?.isSubscribed ? "Newsletter Active" : "Stay Updated"}
+                        </h4>
                         <p className="text-gray-400 text-sm leading-relaxed">
-                            Subscribe to get special offers, free giveaways, and exclusive deals.
+                            {user?.isSubscribed
+                                ? "You are successfully subscribed to our newsletter! Enjoy exclusive updates."
+                                : "Subscribe to get special offers, free giveaways, and exclusive deals."}
                         </p>
                         <div className="space-y-3">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-colors"
-                            />
-                            <button className="cursor-pointer w-full bg-[linear-gradient(to_right,#2563eb,#9333ea)] text-white font-bold py-3 rounded-lg transition-all shadow-lg active:scale-95">
-                                Subscribe
-                            </button>
+                            {!user?.isSubscribed && (
+                                <input
+                                    type="email"
+                                    value={user?.email || ""}
+                                    readOnly
+                                    placeholder="Enter your email"
+                                    className="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                                />
+                            )}
+                            <Button
+                                onClick={handleSubscription}
+                                disabled={loading}
+                                className={`cursor-pointer w-full font-bold py-3 rounded-lg transition-all shadow-lg active:scale-95 ${user?.isSubscribed
+                                        ? "bg-gray-800 text-gray-400 border border-gray-700"
+                                        : "bg-[linear-gradient(to_right,#2563eb,#9333ea)] text-white"
+                                    }`}
+                            >
+                                {loading ? "Processing..." : (user?.isSubscribed ? "Unsubscribe" : "Subscribe")}
+                            </Button>
                         </div>
 
                         {/* Social Icons matching the layout alignment */}
