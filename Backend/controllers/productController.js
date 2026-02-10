@@ -1,4 +1,5 @@
 import { Product } from "../Models/productModel.js";
+import { user as User } from "../models/userModel.js";
 import cloudinary from "../utils/cloudinary.js";
 import getDataUri from "../utils/dataUri.js";
 
