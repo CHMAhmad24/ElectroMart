@@ -134,17 +134,19 @@ const ForgotPassword = () => {
                                 </div>
                             </div>
 
-                            <Input
-                                placeholder="Confirm Password"
-                                type={showPassword ? "text" : "password"}
-                                value={passwords.confirmPassword}
-                                onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })}
-                            />
-                            <div
-                                className="absolute right-3 top-5 cursor-pointer text-gray-500"
-                                onClick={() => setShowPassword(!showPassword)}
-                            >
-                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            <div className='relative'>
+                                <Input
+                                    placeholder="Confirm Password"
+                                    type={showPassword ? "text" : "password"}
+                                    value={passwords.confirmPassword}
+                                    onChange={(e) => setPasswords({ ...passwords, confirmPassword: e.target.value })}
+                                />
+                                <div
+                                    className="absolute right-3 top-2.5 cursor-pointer text-gray-500"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </div>
                             </div>
 
                             <p className="text-[10px] text-gray-500 leading-tight">
