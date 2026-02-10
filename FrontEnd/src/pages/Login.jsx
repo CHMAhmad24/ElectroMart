@@ -54,7 +54,6 @@ const Login = () => {
         }
       });
       if (res.data.success) {
-        console.log("Login successful:", res.data.message);
         navigate('/');
         dispatch(setUser(res.data.user));
         localStorage.setItem('accessToken', res.data.accessToken);
