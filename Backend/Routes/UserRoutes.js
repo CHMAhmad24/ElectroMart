@@ -18,8 +18,7 @@ router.post('/changePassword/:email', changePassword)
 router.get('/getUserById/:id', getUserById)
 router.get('/allUsers', isAuthenticated, isAdmin, allUsers)
 
-router.put('/subscribe', isAuthenticated, toggleSubscription);
-
 router.put('/update/:id', isAuthenticated, singleUpload, updateUser)
+router.put('/subscription/:id', isAuthenticated, toggleSubscription)
 
 export default router;
