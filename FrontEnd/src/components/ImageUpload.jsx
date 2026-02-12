@@ -54,7 +54,7 @@ const ImageUpload = ({ productData, setProductData }) => {
                                         <CardContent>
                                             <img src={preview} alt="" width={200} height={200} className='w-[250px] object-cover rounded-md' />
                                             {/* Remove Button */}
-                                            <button onClick={()=>removeImg(idx)} className='absolute top-1 right-1 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition'><X /></button>
+                                            <button type='button' onClick={()=>removeImg(idx)} className='absolute top-1 right-1 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition'><X /></button>
                                         </CardContent>
                                     </Card>
                                 )
