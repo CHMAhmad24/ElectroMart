@@ -1,5 +1,5 @@
 import { Label } from '@radix-ui/react-label'
-import React, { useRef } from 'react'
+import React from 'react'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { Card, CardContent } from './ui/card'
@@ -7,7 +7,6 @@ import { X } from 'lucide-react'
 
 
 const ImageUpload = ({ productData, setProductData }) => {
-    const fileInputRef = useRef(null);
     const handleFiles = (e) => {
         const files = Array.from(e.target.files || [])
         if (files.length > 0) {
@@ -30,8 +29,8 @@ const ImageUpload = ({ productData, setProductData }) => {
     return (
         <div className='grid gap-2'>
             <Label>Product Images</Label>
-            <Input type='file' ref={fileInputRef} id="file-upload" className="hidden" accept="image/*" multiple onChange={handleFiles} />
-            <Button type="button" variant='outline' className='cursor-pointer' onClick={()=>fileInputRef.current.click()}>
+            <Input type='file' id="file-upload" className="hidden" accept="image/*" multiple onChange={handleFiles} />
+            <Button type="button" variant='outline' className='cursor-pointer'>
                 <label htmlFor="file-upload" className='w-full cursor-pointer'>Upload Images</label>
             </Button>
 
