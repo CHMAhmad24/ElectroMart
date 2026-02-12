@@ -16,10 +16,12 @@ const ImageUpload = ({ productData, setProductData }) => {
         }
     }
 
-    const removeImg = (index)=>{
-        setProductData((prev)=>{
-            const updatedImages = prev.productImg.filter((_,i)=>i !== index)
-            return{...prev, productImg:updatedImages}
+    const removeImg = (index, e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setProductData((prev) => {
+            const updatedImages = prev.productImg.filter((_, i) => i !== index)
+            return { ...prev, productImg: updatedImages }
         })
     }
 
@@ -54,7 +56,7 @@ const ImageUpload = ({ productData, setProductData }) => {
                                         <CardContent>
                                             <img src={preview} alt="" width={200} height={200} className='w-[250px] object-cover rounded-md' />
                                             {/* Remove Button */}
-                                            <button type='button' onClick={()=>removeImg(idx)} className='absolute top-1 right-1 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition'><X /></button>
+                                            <button type='button' onClick={(e) => removeImg(e,idx)} className='absolute top-1 right-1 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition'><X /></button>
                                         </CardContent>
                                     </Card>
                                 )
