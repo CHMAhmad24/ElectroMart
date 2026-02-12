@@ -99,13 +99,8 @@ const UserInfo = () => {
   }, [])
 
   return (
-<<<<<<< HEAD
     <div className='bg-gray-100 lg:pl-[300px] xl:pl-[380px] p-4 mt-15 md:p-10 transition-all duration-300'>
-=======
-    <div className='bg-gray-100 lg:pl-[320px] xl:pl-[380px] p-4 mt-15 md:p-10 transition-all duration-300'>
->>>>>>> c55f7ca2ce75b460623d63c02aeb0a6671b478c5
       <div className='max-w-7xl mx-auto'>
-
         {/* Header with Back Button */}
         <div className='flex items-center gap-4 mb-8'>
           <Button variant="outline" size="icon" onClick={() => navigate(-1)} className="rounded-full shadow-sm cursor-pointer">
