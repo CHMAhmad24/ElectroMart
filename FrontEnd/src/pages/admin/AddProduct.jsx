@@ -77,7 +77,6 @@ const AddProduct = () => {
 
   return (
     <div className='min-h-screen bg-blue-100 flex flex-col pt-20 pb-10 px-4 md:px-8 lg:pl-[320px] xl:pl-[380px]'>
-
       <Card className='w-full max-w-5xl mx-auto shadow-sm border-none'>
         <CardHeader className="pb-4">
           <CardTitle className='font-bold text-2xl md:text-3xl text-gray-800'>Add Product</CardTitle>

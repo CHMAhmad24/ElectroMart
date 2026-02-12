@@ -16,7 +16,7 @@ const ImageUpload = ({ productData, setProductData }) => {
         }
     }
 
-    const removeImg = (index, e) => {
+    const removeImg = (e, index) => {
         e.preventDefault();
         e.stopPropagation();
         setProductData((prev) => {
@@ -29,7 +29,7 @@ const ImageUpload = ({ productData, setProductData }) => {
         <div className='grid gap-2'>
             <Label>Product Images</Label>
             <Input type='file' id="file-upload" className="hidden" accept="image/*" multiple onChange={handleFiles} />
-            <Button type="button" variant='outline' className='cursor-pointer' >
+            <Button variant='outline' className='cursor-pointer' >
                 <label htmlFor="file-upload" className='w-full cursor-pointer'>Upload Images</label>
             </Button>
 
@@ -56,7 +56,7 @@ const ImageUpload = ({ productData, setProductData }) => {
                                         <CardContent>
                                             <img src={preview} alt="" width={200} height={200} className='w-[250px] object-cover rounded-md' />
                                             {/* Remove Button */}
-                                            <button type='button' onClick={(e) => removeImg(e,idx)} className='absolute top-1 right-1 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition'><X /></button>
+                                            <button type='button' onClick={(e) => removeImg(e, idx)} className='absolute top-1 right-1 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition'><X /></button>
                                         </CardContent>
                                     </Card>
                                 )
