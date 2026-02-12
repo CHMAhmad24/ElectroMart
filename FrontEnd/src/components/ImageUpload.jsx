@@ -27,7 +27,7 @@ const ImageUpload = ({ productData, setProductData }) => {
         <div className='grid gap-2'>
             <Label>Product Images</Label>
             <Input type='file' id="file-upload" className="hidden" accept="image/*" multiple onChange={handleFiles} />
-            <Button variant='outline' className='cursor-pointer' >
+            <Button type="button" variant='outline' className='cursor-pointer' >
                 <label htmlFor="file-upload" className='w-full cursor-pointer'>Upload Images</label>
             </Button>
 
