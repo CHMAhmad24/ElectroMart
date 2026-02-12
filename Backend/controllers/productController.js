@@ -1,6 +1,8 @@
 import { Product } from "../Models/productModel.js";
 import cloudinary from "../utils/cloudinary.js";
 import getDataUri from "../utils/dataUri.js";
+import { sendNewProductNotification } from '../Email_Verify/sendNewProductNotification.js';
+import { user as User } from '../Models/userModel.js';
 
 export const addProduct = async (req, res) => {
     try {
@@ -40,6 +42,14 @@ export const addProduct = async (req, res) => {
             brand,
             productImg, //Array of objects [{url, public_id},{url, public_id}]
         })
+        const subscribers = await User.find({ isSubscribed: true }).select('email');
+        const subscriberEmails = subscribers.map(u => u.email);
+        if (subscriberEmails.length > 0) {
+            // 2. Trigger the email utility (don't 'await' if you don't want to slow down the response)
+            sendNewProductNotification(subscriberEmails, newProduct).catch(err => 
+                console.error("Subscription Email Error:", err)
+            );
+        }
         return res.status(200).json({
             success: true,
             message: 'Product Added Successfully',

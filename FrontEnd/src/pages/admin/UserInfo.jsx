@@ -99,8 +99,8 @@ const UserInfo = () => {
   }, [])
 
   return (
-    <div className='bg-gray-100 lg:pl-[320px] xl:pl-[380px] p-4 mt-15 md:p-10 transition-all duration-300'>
-      <div className='max-w-5xl mx-auto'>
+    <div className='bg-gray-100 lg:pl-[300px] xl:pl-[380px] p-4 mt-15 md:p-10 transition-all duration-300'>
+      <div className='max-w-7xl mx-auto'>
 
         {/* Header with Back Button */}
         <div className='flex items-center gap-4 mb-8'>
