@@ -15,7 +15,6 @@ const ImageUpload = ({ productData, setProductData }) => {
                 ...prev, productImg: [...(prev.productImg || []), ...files]
             }))
         }
-        e.target.value = null;
     }
 
     const removeImg = (e, index) => {
