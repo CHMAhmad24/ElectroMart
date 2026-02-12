@@ -7,6 +7,8 @@ import { toast } from 'sonner'
 import { useDispatch } from 'react-redux'
 import { setCart } from '@/ReduxToolkit/productSlice'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const ProductDesc = ({ product }) => {
     const [loading, setLoading] = useState(false)
     const [quantity, setQuantity] = useState(1)
@@ -17,7 +19,7 @@ const ProductDesc = ({ product }) => {
     const addToCart = async (productId) => {
         try {
             setLoading(true)
-            const res = await axios.post(`https://electromart-backend-five.vercel.app/api/v1/cart/add`, { productId, quantity }, {
+            const res = await axios.post(`${BACKEND_URL}/api/v1/cart/add`, { productId, quantity }, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

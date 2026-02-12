@@ -19,6 +19,8 @@ import { toast } from 'sonner'
 import { useDispatch } from 'react-redux'
 import { setUser } from '@/ReduxToolkit/userSlice'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -48,7 +50,7 @@ const Login = () => {
       if (!emailRegex.test(formData.email)) {
         return toast.error("Please enter a valid email address");
       }
-      const res = await axios.post(`https://electromart-backend-five.vercel.app/api/v1/user/login`, formData, {
+      const res = await axios.post(`${BACKEND_URL}/api/v1/user/login`, formData, {
         headers: {
           'Content-Type': 'application/json'
         }

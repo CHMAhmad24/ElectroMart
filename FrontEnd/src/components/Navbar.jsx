@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '@/ReduxToolkit/userSlice'
 import {clearProductState} from '@/ReduxToolkit/productSlice'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const Navbar = () => {
   const { user } = useSelector((store) => store.user);
   const { cart } = useSelector((store) => store.product)
@@ -26,7 +28,7 @@ const Navbar = () => {
   const logoutHandle = async () => {
     try {
       setLoading(true);
-      const res = await axios.post('https://electromart-backend-five.vercel.app/api/v1/user/logout', {}, {
+      const res = await axios.post(`${BACKEND_URL}/api/v1/user/logout`, {}, {
         headers: { Authorization: `Bearer ${accessToken}` },
         withCredentials: true
       })

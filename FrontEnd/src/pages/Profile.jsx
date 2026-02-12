@@ -12,6 +12,8 @@ import axios from 'axios'
 import { Loader2, User, Package, Camera } from 'lucide-react'
 import MyOrders from '@/components/MyOrders'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const Profile = () => {
     const { user } = useSelector(store => store.user)
     const params = useParams()
@@ -115,7 +117,7 @@ const Profile = () => {
                 formData.append("file", file);
             }
 
-            const res = await axios.put(`https://electromart-backend-five.vercel.app/api/v1/user/update/${userId}`, formData, {
+            const res = await axios.put(`${BACKEND_URL}/api/v1/user/update/${userId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                     "Content-Type": "multipart/form-data"

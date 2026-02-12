@@ -16,6 +16,8 @@ import { setProducts } from '@/ReduxToolkit/productSlice'
 import { ArrowUp, ChevronUp, Filter, Search, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const Products = () => {
     const { products } = useSelector(store => store.product)
     const [allProducts, setAllProducts] = useState([])
@@ -32,7 +34,7 @@ const Products = () => {
     const getAllProducts = async () => {
         try {
             setLoading(true)
-            const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/products/getAllProducts`)
+            const res = await axios.get(`${BACKEND_URL}/api/v1/products/getAllProducts`)
             if (res.data.success) {
                 setAllProducts(res.data.products)
                 dispatch(setProducts(res.data.products))

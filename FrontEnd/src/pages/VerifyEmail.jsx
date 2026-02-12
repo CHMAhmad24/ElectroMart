@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const VerifyEmail = () => {
     const { token } = useParams()
     const [status, setStatus] = useState('Verifying...');
@@ -9,7 +11,7 @@ const VerifyEmail = () => {
 
     const verifyEmail = async () => {
         try {
-            const response = await axios.post(`https://electromart-backend-five.vercel.app/api/v1/user/verify`, {}, {
+            const response = await axios.post(`${BACKEND_URL}/api/v1/user/verify`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -7,6 +7,7 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const Carousel = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
@@ -46,7 +47,7 @@ const Carousel = () => {
   const fetchAllProducts = async () => {
     try {
       setLoading(true)
-      const res = await axios.get('https://electromart-backend-five.vercel.app/api/v1/products/getAllProducts')
+      const res = await axios.get(`${BACKEND_URL}/api/v1/products/getAllProducts`)
       setProductsData(res.data.products)
     } catch (error) {
       console.log(error);

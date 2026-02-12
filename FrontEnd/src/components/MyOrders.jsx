@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import OrderCard from "./OrderCard";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const MyOrders = () => {
     const [userOrder, setUserOrder] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -13,10 +15,11 @@ const MyOrders = () => {
             setLoading(false);
             return;
         }
+        
 
         try {
             setLoading(true);
-            const res = await axios.get("https://electromart-backend-five.vercel.app/api/v1/order/getMyorders", {
+            const res = await axios.get(`${BACKEND_URL}/api/v1/order/getMyorders`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 function Register() {
   const [formData, setFormData] = useState({
     Fname: '',
@@ -19,7 +21,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://electromart-backend-five.vercel.app/api/users/s', formData);
+      const res = await axios.post(`${BACKEND_URL}/api/users/register`, formData);
       if (res.data.success) {
         alert('Registration successful! Click Login to continue.');
       } else {

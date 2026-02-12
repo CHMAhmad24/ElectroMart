@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
 import { Package, Calendar, User, DollarSign, Clock, Loader2 } from 'lucide-react';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const AdminOrders = () => {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true);
@@ -11,7 +13,7 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/order/all`, {
+      const { data } = await axios.get(`${BACKEND_URL}/api/v1/order/all`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       })
       if (data.success) setOrders(data.orders);
@@ -25,7 +27,7 @@ const AdminOrders = () => {
   const handleStatusUpdate = async (orderId, newStatus) => {
     try {
       const { data } = await axios.put(
-        `https://electromart-backend-five.vercel.app/api/v1/order/status`,
+        `${BACKEND_URL}/api/v1/order/status`,
         { orderId, status: newStatus },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );

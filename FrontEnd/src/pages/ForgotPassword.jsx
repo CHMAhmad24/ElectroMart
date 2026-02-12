@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const ForgotPassword = () => {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -20,7 +22,7 @@ const ForgotPassword = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
-    const BASE_URL = "https://electromart-backend-five.vercel.app/api/v1/user";
+    const BASE_URL = `${BACKEND_URL}/api/v1/user`;
 
     // OTP Input logic
     const handleOtpChange = (element, index) => {

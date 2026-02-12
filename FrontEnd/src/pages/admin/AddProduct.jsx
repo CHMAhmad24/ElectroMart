@@ -12,6 +12,8 @@ import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const AddProduct = () => {
   const accessToken = localStorage.getItem("accessToken")
   const dispatch = useDispatch()
@@ -56,7 +58,7 @@ const AddProduct = () => {
 
     try {
       setLoading(true)
-      const res = await axios.post(`https://electromart-backend-five.vercel.app/api/v1/products/add`, formData, {
+      const res = await axios.post(`${BACKEND_URL}/api/v1/products/add`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

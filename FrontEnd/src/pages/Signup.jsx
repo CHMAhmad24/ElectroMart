@@ -16,6 +16,8 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react'
 import axios from 'axios'
 import { toast } from 'sonner'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -56,7 +58,7 @@ const Signup = () => {
 
         try {
             setLoading(true);
-            const res = await axios.post(`https://electromart-backend-five.vercel.app/api/v1/user/register`, formData, {
+            const res = await axios.post(`${BACKEND_URL}/api/v1/user/register`, formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

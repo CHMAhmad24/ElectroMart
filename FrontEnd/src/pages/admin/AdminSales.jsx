@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from 'recharts';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const AdminSales = () => {
   const [stats, setStats] = useState({
     totalUsers: 0,
@@ -15,7 +17,7 @@ const AdminSales = () => {
   const fetchStats = async () => {
     try {
       const accessToken = localStorage.getItem("accessToken");
-      const res = await axios.get("https://electromart-backend-five.vercel.app/api/v1/order/sales", {
+      const res = await axios.get("${BACKEND_URL}/api/v1/order/sales", {
         headers: { Authorization: `Bearer ${accessToken}` }
       });
       if (res.data.success) {
@@ -27,7 +29,7 @@ const AdminSales = () => {
   };
 
   useEffect(() => {
-    fetchStats();
+    fetchStats(); /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
   return (

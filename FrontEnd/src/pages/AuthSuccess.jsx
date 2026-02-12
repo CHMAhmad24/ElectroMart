@@ -4,6 +4,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const AuthSuccess = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -20,7 +22,7 @@ const AuthSuccess = () => {
       if (accessToken) {
         localStorage.setItem("accessToken", accessToken)
         try {
-          const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/auth/me`, {
+          const res = await axios.get(`${BACKEND_URL}/api/v1/auth/me`, {
             headers: {
               Authorization: `Bearer ${accessToken}`
             }

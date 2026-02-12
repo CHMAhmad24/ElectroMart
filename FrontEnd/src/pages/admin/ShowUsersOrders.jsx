@@ -5,6 +5,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, ShoppingBag, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const ShowUsersOrders = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ const ShowUsersOrders = () => {
     const accessToken = localStorage.getItem("accessToken")
     try {
       setLoading(true)
-      const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/order/userOrder/${params.userId}`, {
+      const res = await axios.get(`${BACKEND_URL}/api/v1/order/userOrder/${params.userId}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

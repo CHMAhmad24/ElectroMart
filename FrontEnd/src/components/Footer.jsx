@@ -16,6 +16,7 @@ import axios from 'axios';
 import { setUser } from '@/ReduxToolkit/userSlice';
 import { Button } from './ui/button';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const Footer = () => {
     const [loading, setLoading] = useState()
     const dispatch = useDispatch()
@@ -24,7 +25,7 @@ const Footer = () => {
     useEffect(() => {
         const getAllProducts = async () => {
             try {
-                const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/products/getAllProducts`)
+                const res = await axios.get(`${BACKEND_URL}/api/v1/products/getAllProducts`)
                 if (res.data.success) {
                     dispatch(setProducts(res.data.products))
                 }
@@ -48,7 +49,7 @@ const Footer = () => {
         }
         try {
             setLoading(true);
-            const url = `https://electromart-backend-five.vercel.app/api/v1/user/subscription/${userId}`;
+            const url = `${BACKEND_URL}/api/v1/user/subscription/${userId}`;
 
             console.log("Requesting URL:", url);
 
@@ -79,7 +80,6 @@ const Footer = () => {
                     .map(p => {
                         let cat = p.category?.trim().toLowerCase();
                         if (!cat) return null;
-
                         // Sabko plural (s/es) mein convert karne ka logic taake duplicates merge ho jayein
                         if (!cat.endsWith('s')) {
                             if (cat.endsWith('ch') || cat.endsWith('sh')) {

@@ -6,6 +6,8 @@ import UserLogo from "../../Assets/User-png.webp"
 import { Button } from '@/components/ui/button'
 import { useNavigate } from 'react-router-dom'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const AdminUsers = () => {
   const [users, setUesrs] = useState([])
   const navigate = useNavigate()
@@ -19,7 +21,7 @@ const AdminUsers = () => {
   const getAllUsers = async () => {
     const accessToken = localStorage.getItem("accessToken")
     try {
-      const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/user/allUsers`, {
+      const res = await axios.get(`${BACKEND_URL}/api/v1/user/allUsers`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -33,7 +35,7 @@ const AdminUsers = () => {
   }
 
   useEffect(() => {
-    getAllUsers()
+    getAllUsers() /* eslint-disable react-hooks/exhaustive-deps */
   }, [])
 
   return (

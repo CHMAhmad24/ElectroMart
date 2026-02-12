@@ -11,6 +11,8 @@ import axios from 'axios'
 import { setCart } from '@/ReduxToolkit/productSlice'
 import { toast } from 'sonner'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const Cart = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -22,14 +24,13 @@ const Cart = () => {
   const Tax = subtotal * 0.05 
   const Total = subtotal + shipping + Tax
 
-  const API = "https://electromart-backend-five.vercel.app/api/v1/cart"
   const accessToken = localStorage.getItem("accessToken")
 
   const handleUpdateQuantity = async (productId, type) => {
     try {
       setQtyLoadingId(productId)
 
-      const res = await axios.put(`${API}/update`, { productId, type }, {
+      const res = await axios.put(`${BACKEND_URL}/api/v1/cart/update`, { productId, type }, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -47,7 +48,7 @@ const Cart = () => {
   const handleRemove = async (productId) => {
     try {
       setRemoveLoadingId(productId)
-      const res = await axios.delete(`${API}/remove`, {
+      const res = await axios.delete(`${BACKEND_URL}/api/v1/cart/remove`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         },
@@ -66,7 +67,7 @@ const Cart = () => {
 
   const loadCart = async () => {
     try {
-      const res = await axios.get(`${API}`, {
+      const res = await axios.get(`${BACKEND_URL}/api/v1/cart`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

@@ -8,6 +8,9 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { setCart } from '@/ReduxToolkit/productSlice'
 
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const ProductCard = ({ product, loading }) => {
     const { productImg, productPrice, productName } = product
     const [loadings, setLoadings] = useState(false)
@@ -22,7 +25,7 @@ const ProductCard = ({ product, loading }) => {
         }
         try {
             setLoadings(true)
-            const res = await axios.post('https://electromart-backend-five.vercel.app/api/v1/cart/add', { productId, quantity: 1 }, {
+            const res = await axios.post(`${BACKEND_URL}/api/v1/cart/add`, { productId, quantity: 1 }, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }

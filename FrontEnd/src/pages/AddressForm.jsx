@@ -12,6 +12,8 @@ import axios from 'axios'
 import { toast } from 'sonner'
 import { Loader2, ShoppingCart, Trash2, MapPin, Plus } from 'lucide-react'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const AddressForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -102,7 +104,7 @@ const AddressForm = () => {
                 shipping: shipping
             };
 
-            const response = await axios.post("https://electromart-backend-five.vercel.app/api/v1/order/place", orderData, {
+            const response = await axios.post(`${BACKEND_URL}/api/v1/order/place`, orderData, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
 

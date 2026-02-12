@@ -11,6 +11,8 @@ import userpng from "../../Assets/User-png.webp"
 import { setUser } from '@/ReduxToolkit/userSlice'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const UserInfo = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
@@ -58,7 +60,7 @@ const UserInfo = () => {
 
       if (file) formData.append("file", file);
 
-      const res = await axios.put(`https://electromart-backend-five.vercel.app/api/v1/user/update/${userId}`, formData, {
+      const res = await axios.put(`${BACKEND_URL}/api/v1/user/update/${userId}`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "multipart/form-data"
@@ -83,7 +85,7 @@ const UserInfo = () => {
 
   const getUserDetails = async () => {
     try {
-      const res = await axios.get(`https://electromart-backend-five.vercel.app/api/v1/user/getUserById/${userId}`)
+      const res = await axios.get(`${BACKEND_URL}/api/v1/user/getUserById/${userId}`)
       if (res.data.success) {
         setUpdateUser(prevState => ({ ...prevState, ...res.data.user }));
       }
