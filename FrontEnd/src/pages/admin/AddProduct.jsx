@@ -47,7 +47,7 @@ const AddProduct = () => {
     formData.append("category", productData.category);
     formData.append("brand", productData.brand);
 
-    if (productData.productImg.length === 0) {
+    if (productData.productImg.length <= 0) {
       toast.error("Please select at least one image")
       return;
     }

@@ -21,7 +21,7 @@ export const sendNewProductNotification = async (emails, product) => {
                 <h3>${product.productName}</h3>
                 <p><strong>Price:</strong> $${product.productPrice}</p>
                 <p>${product.productDesc}</p>
-                <a href="https://electro-mart-shop.vercel.app/product/${product._id}" 
+                <a href="https://electro-mart-shop.vercel.app/products/${product._id}" 
                    style="background: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
                    View Product
                 </a>
