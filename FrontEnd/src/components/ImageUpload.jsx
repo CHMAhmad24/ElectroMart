@@ -7,7 +7,7 @@ import { X } from 'lucide-react'
 
 
 const ImageUpload = ({ productData, setProductData }) => {
-    const fileInputRef = useRef(null);
+    const fileInputRef = useRef();
     const handleFiles = (e) => {
         const files = Array.from(e.target.files || [])
         if (files.length > 0) {
@@ -15,6 +15,7 @@ const ImageUpload = ({ productData, setProductData }) => {
                 ...prev, productImg: [...(prev.productImg || []), ...files]
             }))
         }
+        e.target.value = null;
     }
 
     const removeImg = (e, index) => {
