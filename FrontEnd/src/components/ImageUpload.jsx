@@ -10,9 +10,9 @@ const ImageUpload = ({ productData, setProductData }) => {
     const fileInputRef = useRef(null);
     const handleFiles = (e) => {
         const files = Array.from(e.target.files || [])
-        if (files.length) {
+        if (files.length > 0) {
             setProductData((prev) => ({
-                ...prev, productImg: [...prev.productImg, ...files]
+                ...prev, productImg: [...(prev.productImg || []), ...files]
             }))
         }
         e.target.value = null;
