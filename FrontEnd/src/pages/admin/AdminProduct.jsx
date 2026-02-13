@@ -170,9 +170,10 @@ const AdminProduct = () => {
                                     </div>
                                     <div className='text-center sm:text-left'>
                                         <h1 className='font-bold text-gray-800 text-lg line-clamp-1 max-w-62.5 md:max-w-md'>
-                                            {product.productName}
+                                            {product.productName} 
                                         </h1>
                                         <p className='text-sm text-blue-500 font-medium'>{product.brand} • {product.category}</p>
+                                        <p className='text-sm text-gray-500 font-medium'>In Stock X {product.stock}</p>
                                     </div>
                                 </div>
 
