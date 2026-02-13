@@ -36,7 +36,7 @@ passport.use(
                         username: profile.displayName,
                         email: profile.emails[0].value,
                         avatar: profile.photos[0].value,
-                        isLoggedIn: true,
+                        isLoggedIn: "true",
                         isVerified: true,
                     });
                     console.log("New Google User Created:", foundUser.username);
