@@ -212,7 +212,7 @@ const AdminProduct = () => {
                                                             <Input name="brand" value={editProduct?.brand} onChange={handleChange} />
                                                         </div>
                                                     </div>
-                                                    <div className="grid gap-2 gap-4">
+                                                    <div className="grid grid-cols-2 gap-4">
                                                         <div className="grid gap-2">
                                                             <Label>Stock</Label>
                                                             <Input type="number" name="stock" value={editProduct?.stock} onChange={handleChange} />
