@@ -22,7 +22,7 @@ app.set("trust proxy", 1);
 app.use(express.json())
 
 app.use(session({
-  secret: process.env.SECRET_KEY,
+  secret: process.env.SECRET_KEY || 'some_random_secret',
   resave: false,
   saveUninitialized: true,
   proxy: true,
