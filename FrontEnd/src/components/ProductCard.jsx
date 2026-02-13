@@ -12,16 +12,22 @@ import { setCart } from '@/ReduxToolkit/productSlice'
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const ProductCard = ({ product, loading }) => {
-    const { productImg, productPrice, productName } = product
+    const { productImg, productPrice, productName, stock, _id } = product
     const [loadings, setLoadings] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const accessToken = localStorage.getItem('accessToken')
 
+    const isOutOfStock = stock <= 0;
+
     const addToCart = async (productId) => {
         if (!accessToken) {
             toast.error("Please login or register to shop products");
-            return navigate('/signup'); 
+            return navigate('/signup');
+        }
+        if (isOutOfStock) {
+            toast.error(`Sorry, ${productName} is out of stock`);
+            return;
         }
         try {
             setLoadings(true)
@@ -36,10 +42,11 @@ const ProductCard = ({ product, loading }) => {
             }
         } catch (error) {
             console.log(error)
-            if(error.response?.status === 401) {
-            toast.error("Session expired. Please login again.");
-            navigate('/signup');
-        }
+            toast.error(error.response?.data?.message || "Something went wrong");
+            if (error.response?.status === 401) {
+                toast.error("Session Expired please login again")
+                navigate('/login');
+            }
         } finally {
             setLoadings(false)
         }
@@ -61,7 +68,10 @@ const ProductCard = ({ product, loading }) => {
                     </div> :
                     <div className='px-2 space-y-1 '>
                         <h1 className='font-semibold h-12 line-clamp-2 '>{productName}</h1>
-                        <h2 className='font-bold '>$ {productPrice}</h2>
+                        <div className='flex flex-row justify-between align-middle'>
+                            <h2 className='font-bold '>$ {productPrice}</h2>
+                            <h2 className='font-bold '>In Stock {stock}</h2>
+                        </div>
                         <Button disabled={loadings} onClick={() => addToCart(product._id)} className='bg-blue-600 mb-3 w-full cursor-pointer'>
                             {loadings ? <> <Loader2 className='h-4 w-4 animate-spin mr-2' /> Please wait </> : <><ShoppingCart /> Add to cart </>}
                         </Button>
