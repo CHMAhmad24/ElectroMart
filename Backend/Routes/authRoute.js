@@ -1,6 +1,7 @@
 import express from "express"
 import passport from "passport"
 import jwt from "jsonwebtoken"
+import 'dotenv/config'
 import { isAuthenticated } from "../Middlewares/isAuthenticated.js"
 const router = express.Router();
 
@@ -15,13 +16,9 @@ router.get("/google/callback",
                 return res.redirect("https://electro-mart-shop.vercel.app/login?error=user_not_found");
             }
 
-            const token = jwt.sign(
-                { id: req.user._id, email: req.user.email }, 
-                process.env.SECRET_KEY, 
-                { expiresIn: "5d" }
-            );
+            const token = jwt.sign({ id: req.user._id, email: req.user.email }, process.env.SECRET_KEY, { expiresIn: "5d" });
 
-            // Frontend success page par bhein token ke sath
+            // Frontend success page par bheje token ke sath
             res.redirect(`https://electro-mart-shop.vercel.app/auth-success?token=${token}`);
         } catch (error) {
             console.error("Callback Error:", error);
