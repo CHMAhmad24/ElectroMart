@@ -6,6 +6,7 @@ import { setUser } from '@/ReduxToolkit/userSlice';
 import { toast } from 'sonner';
 import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Google from "../Assets/Google.png"
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
