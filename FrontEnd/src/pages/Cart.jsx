@@ -109,17 +109,17 @@ const Cart = () => {
           <div className='flex flex-col lg:flex-row gap-8'>
 
             {/* Products List Section */}
-            <div className='flex flex-col gap-4 flex-1 lg:w-[500px]'>
+            <div className='flex flex-col gap-4 flex-1 lg:w-125'>
               {cart?.items?.map((product, index) => (
                 <Card key={index} className="overflow-hidden mb-4 shadow-sm">
                   <div className='flex flex-col sm:flex-row items-center gap-4 p-4'>
 
                     {/* Section 1: Image & Title */}
-                    <div className='flex items-center gap-4 w-full sm:flex-[2] min-w-0'>
+                    <div className='flex items-center gap-4 w-full sm:flex-2 min-w-0'>
                       <img
                         src={product?.productId?.productImg?.[0].url || UserLogo}
                         alt="product"
-                        className='w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg flex-shrink-0 border'
+                        className='w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg shrink-0 border'
                       />
 
                       <div className='min-w-0 flex-1'>
@@ -172,7 +172,7 @@ const Cart = () => {
                       <button
                         disabled={removeLoadingId}
                         onClick={() => handleRemove(product?.productId?._id)}
-                        className='text-red-500 hover:text-red-700 transition-all flex items-center gap-1 text-xs sm:text-sm font-medium flex-shrink-0 cursor-pointer'
+                        className='text-red-500 hover:text-red-700 transition-all flex items-center gap-1 text-xs sm:text-sm font-medium shrink-0 cursor-pointer'
                       >
                         {removeLoadingId === product.productId._id ?
                           <Loader2 className="h-4 w-4 animate-spin" /> :
@@ -187,7 +187,7 @@ const Cart = () => {
             </div>
 
             {/* Order Summary Sidebar */}
-            <div className='w-full lg:w-[380px]'>
+            <div className='w-full lg:w-95'>
               <Card className="sticky top-24">
                 <CardHeader>
                   <CardTitle>Order Summary</CardTitle>
