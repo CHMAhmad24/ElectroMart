@@ -152,6 +152,11 @@ export const updateStatus = async (req, res) => {
         if (!allowedStatus.includes(status)) {
             return res.status(400).json({ success: false, message: "Invalid status value" });
         }
+
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ success: false, message: "Order not found" });
+        }
         
         if (status === "Cancelled") {
             const order = await Order.findById(orderId);
