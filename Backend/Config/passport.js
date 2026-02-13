@@ -28,10 +28,10 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, cb) => {
             try {
-                let foundUser = await User.findOne({ googleId: profile.id });
+                let user = await User.findOne({ googleId: profile.id });
 
-                if (!foundUser) {
-                    foundUser = await User.create({
+                if (!user) {
+                    user = await User.create({
                         googleId: profile.id,
                         username: profile.displayName,
                         email: profile.emails[0].value,
@@ -39,15 +39,9 @@ passport.use(
                         isLoggedIn: true,
                         isVerified: true,
                     });
-                    console.log("New Google User Created:", foundUser.username);
-                } else {
-                    // Agar purana user hai toh sirf status update karein
-                    foundUser.isLoggedIn = true;
-                    await foundUser.save();
-                    console.log("Existing Google User Logged In:", foundUser.username);
                 }
 
-                return cb(null, foundUser);
+                return cb(null, user);
             } catch (error) {
                 console.error("Error in Google Strategy:", error);
                 return cb(error, null);

@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }))
 
 router.get("/google/callback",
-    passport.authenticate("google", { session: false, failureRedirect: "https://electro-mart-shop.vercel.app/login" }),
+    passport.authenticate("google", { session: false }),
     (req, res) => {
         try {
             if (!req.user) {
@@ -16,8 +16,8 @@ router.get("/google/callback",
             }
 
             const token = jwt.sign(
-                { id: req.user._id, email: req.user.email }, 
-                process.env.SECRET_KEY, 
+                { id: req.user._id, email: req.user.email },
+                process.env.SECRET_KEY,
                 { expiresIn: "5d" }
             );
 
@@ -25,7 +25,7 @@ router.get("/google/callback",
             res.redirect(`https://electro-mart-shop.vercel.app/auth-success?token=${token}`);
         } catch (error) {
             console.error("Callback Error:", error);
-            res.redirect("https://electro-mart-shop.vercel.app/login?error=server_error");
+            res.redirect("https://electro-mart-shop.vercel.app/login?error=google_failed");
         }
     }
 )
