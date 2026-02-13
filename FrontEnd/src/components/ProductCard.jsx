@@ -70,7 +70,12 @@ const ProductCard = ({ product, loading }) => {
                         <h1 className='font-semibold h-12 line-clamp-2 '>{productName}</h1>
                         <div className='flex flex-row justify-between align-middle'>
                             <h2 className='font-bold '>$ {productPrice}</h2>
-                            <h2 className='font-bold '>In Stock {stock}</h2>
+                            <h2 className={`font-bold ${stock <= 5 ? 'text-red-600' :
+                                    stock <= 10 ? 'text-yellow-600' :
+                                        'text-green-600'
+                                }`}>
+                                {stock > 0 ? `In Stock: ${stock}` : "Out of Stock"}
+                            </h2>
                         </div>
                         <Button disabled={loadings} onClick={() => addToCart(product._id)} className='bg-blue-600 mb-3 w-full cursor-pointer'>
                             {loadings ? <> <Loader2 className='h-4 w-4 animate-spin mr-2' /> Please wait </> : <><ShoppingCart /> Add to cart </>}

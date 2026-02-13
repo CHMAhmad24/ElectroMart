@@ -21,12 +21,27 @@ const Cart = () => {
   const { cart } = useSelector((store) => store.product)
   const subtotal = cart?.totalPrice
   const shipping = subtotal > 50 ? 0 : 5
-  const Tax = subtotal * 0.05 
+  const Tax = subtotal * 0.05
   const Total = subtotal + shipping + Tax
 
   const accessToken = localStorage.getItem("accessToken")
 
-  const handleUpdateQuantity = async (productId, type) => {
+  const handleUpdateQuantity = async (product, type) => {
+    const productId = product.productId._id;
+    const currentQty = product.quantity;
+    const maxStock = product.productId.stock;
+    const productName = product.productId.productName
+
+    if (type === 'decrease' && currentQty === 1) {
+      handleRemove(productId);
+      return;
+    }
+
+    if (type === 'increase' && currentQty >= maxStock) {
+      toast.error(`Max ${maxStock} units of ${productName} available in stock`);
+      return;
+    }
+
     try {
       setQtyLoadingId(productId)
 
@@ -125,13 +140,15 @@ const Cart = () => {
                     <div className='flex items-center justify-between w-full sm:w-auto sm:flex-[1.5] gap-4 sm:gap-6 border-t sm:border-t-0 pt-4 sm:pt-0'>
 
                       {/* Quantity Controls */}
-                      <div className='flex items-center gap-2 bg-gray-100 rounded-lg p-1 flex-shrink-0'>
+                      <div className='flex items-center gap-2 bg-gray-100 rounded-lg p-1 shrink-0'>
                         <Button
                           size="icon"
                           variant="ghost"
                           className="h-8 w-8 hover:bg-white transition-colors cursor-pointer"
-                          onClick={() => handleUpdateQuantity(product.productId._id, 'decrease')}
-                        > - </Button>
+                          onClick={() => handleUpdateQuantity(product, 'decrease')}
+                        >
+                          {product.quantity === 1 ? <Trash2 className="h-3 w-3 text-red-500" /> : "-"}
+                        </Button>
                         <span className='w-6 text-center font-medium text-sm'>
                           {qtyLoadingId === product.productId._id ? <Loader2 className="h-4 w-4 animate-spin mx-auto" /> : product.quantity}
                         </span>
@@ -139,12 +156,12 @@ const Cart = () => {
                           size="icon"
                           variant="ghost"
                           className="h-8 w-8 hover:bg-white transition-colors cursor-pointer"
-                          onClick={() => handleUpdateQuantity(product.productId._id, 'increase')}
+                          onClick={() => handleUpdateQuantity(product, 'increase')}
                         > + </Button>
                       </div>
 
                       {/* Total Price (Desktop/Tablet view) */}
-                      <div className='hidden sm:flex flex-col items-end min-w-[100px]'>
+                      <div className='hidden sm:flex flex-col items-end min-w-25'>
                         <p className='text-xs text-gray-400'>Total</p>
                         <p className='font-bold text-gray-800 text-sm sm:text-base'>
                           $ {(product?.productId?.productPrice * product?.quantity).toLocaleString()}
