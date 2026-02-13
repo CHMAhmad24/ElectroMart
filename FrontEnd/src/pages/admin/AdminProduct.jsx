@@ -69,6 +69,7 @@ const AdminProduct = () => {
         formData.append("productDesc", editProduct.productDesc)
         formData.append("category", editProduct.category)
         formData.append("brand", editProduct.brand)
+        formData.append("stock", editProduct.stock)
 
         const existingImages = editProduct.productImg
             .filter((img) => !(img instanceof File) && img.public_id)
@@ -131,15 +132,15 @@ const AdminProduct = () => {
         <div className='lg:pl-[350px] py-20 px-4 md:px-10 lg:pr-20 flex flex-col gap-6 min-h-screen bg-gray-50'>
             <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-blue-100 p-4 rounded-xl shadow-sm border'>
                 <div className='relative w-full md:w-[400px]'>
-                    <Input 
-                        value={searchTerm} 
-                        onChange={(e) => setSearchTerm(e.target.value)} 
-                        placeholder='Search products...' 
+                    <Input
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder='Search products...'
                         className="pl-4 pr-10 h-11 bg-gray-50 border-gray-200"
                     />
                     <Search className='absolute right-3 top-3 h-5 w-5 text-gray-400' />
                 </div>
-                
+
                 <Select onValueChange={(value) => setSortOrder(value)}>
                     <SelectTrigger className="w-full md:w-[200px] h-11 bg-gray-50 cursor-pointer">
                         <SelectValue placeholder="Sort By Price" />
@@ -157,18 +158,18 @@ const AdminProduct = () => {
                     filteredProducts.map((product) => (
                         <Card key={product._id} className="p-3 md:p-4 hover:shadow-md transition-shadow duration-200 border-gray-200">
                             <div className='flex flex-col sm:flex-row items-center justify-between gap-4'>
-                                
+
                                 {/* Info Section */}
                                 <div className='flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto'>
                                     <div className='w-20 h-20 md:w-24 md:h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0'>
-                                        <img 
-                                            src={product.productImg[0]?.url || 'https://via.placeholder.com/150'} 
-                                            alt={product.productName} 
-                                            className='w-full h-full object-cover' 
+                                        <img
+                                            src={product.productImg[0]?.url || 'https://via.placeholder.com/150'}
+                                            alt={product.productName}
+                                            className='w-full h-full object-cover'
                                         />
                                     </div>
                                     <div className='text-center sm:text-left'>
-                                        <h1 className='font-bold text-gray-800 text-lg line-clamp-1 max-w-[250px] md:max-w-md'>
+                                        <h1 className='font-bold text-gray-800 text-lg line-clamp-1 max-w-62.5 md:max-w-md'>
                                             {product.productName}
                                         </h1>
                                         <p className='text-sm text-blue-500 font-medium'>{product.brand} • {product.category}</p>
@@ -180,18 +181,18 @@ const AdminProduct = () => {
                                     <span className='font-bold text-xl text-gray-900'>
                                         ${product.productPrice.toLocaleString()}
                                     </span>
-                                    
+
                                     <div className='flex gap-2'>
                                         {/* Edit Dialog */}
                                         <Dialog open={isDialogOpen && editProduct?._id === product._id} onOpenChange={(open) => {
-                                            if(!open) setIsDialogOpen(false);
+                                            if (!open) setIsDialogOpen(false);
                                         }}>
                                             <DialogTrigger asChild>
                                                 <Button variant="outline" size="icon" onClick={() => { setEditProduct(product); setIsDialogOpen(true); }} className="hover:bg-green-50 border-green-200 cursor-pointer">
                                                     <Edit className='h-4 w-4 text-green-600' />
                                                 </Button>
                                             </DialogTrigger>
-                                            <DialogContent className="w-[95%] sm:max-w-[625px] max-h-[90vh] overflow-y-auto rounded-2xl">
+                                            <DialogContent className="w-[95%] sm:max-w-156.25 max-h-[90vh] overflow-y-auto rounded-2xl">
                                                 <DialogHeader>
                                                     <DialogTitle className="text-2xl">Edit Product</DialogTitle>
                                                     <DialogDescription>Modify details for {product.productName}</DialogDescription>
@@ -211,9 +212,16 @@ const AdminProduct = () => {
                                                             <Input name="brand" value={editProduct?.brand} onChange={handleChange} />
                                                         </div>
                                                     </div>
-                                                    <div className="grid gap-2">
-                                                        <Label>Category</Label>
-                                                        <Input name="category" value={editProduct?.category} onChange={handleChange} />
+                                                    <div className="grid gap-2 gap-4">
+                                                        <div className="grid gap-2">
+                                                            <Label>Stock</Label>
+                                                            <Input type="number" name="stock" value={editProduct?.stock} onChange={handleChange} />
+                                                        </div>
+                                                        <div className="grid gap-2">
+                                                            <Label>Category</Label>
+                                                            <Input name="category" value={editProduct?.category} onChange={handleChange} />
+                                                        </div>
+
                                                     </div>
                                                     <div className="grid gap-2">
                                                         <Label>Description</Label>
