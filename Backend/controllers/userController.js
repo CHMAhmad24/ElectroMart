@@ -183,7 +183,7 @@ export const login = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: `Login successful. Welcome back ${existingUser.firstName}`,
+            message: `Login successful. Welcome back ${existingUser.firstName} || ${existingUser.username}`,
             user: userResponse, // Ab clean object jayega
             accessToken,
             refreshToken

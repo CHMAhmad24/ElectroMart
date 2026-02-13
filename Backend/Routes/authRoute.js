@@ -13,7 +13,7 @@ router.get("/google/callback",
     (req, res) => {
         try {
             if (!req.user) {
-                return res.redirect("https://electro-mart-shop.vercel.app/login?error=user_not_found");
+                return res.redirect("https://electro-mart-shop.vercel.app/login?error=auth_failed");
             }
 
             const token = jwt.sign({ id: req.user._id, email: req.user.email }, process.env.SECRET_KEY, { expiresIn: "5d" });
@@ -21,8 +21,8 @@ router.get("/google/callback",
             // Frontend success page par bheje token ke sath
             res.redirect(`https://electro-mart-shop.vercel.app/auth-success?token=${token}`);
         } catch (error) {
-            console.error("Callback Error:", error);
-            res.redirect("https://electro-mart-shop.vercel.app/login?error=server_error");
+            console.log("JWT Signing Error:", error);
+            res.status(500).send("Internal Server Error during token generation");
         }
     }
 )
