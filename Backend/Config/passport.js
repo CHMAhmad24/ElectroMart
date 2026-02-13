@@ -1,6 +1,5 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
-import { user as User } from "../Models/userModel.js";
 import User from "../Models/userModel.js";
 
 // 1. Serialize User: User ki ID ko session mein save karne ke liye
