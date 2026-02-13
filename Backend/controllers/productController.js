@@ -6,10 +6,10 @@ import { user as User } from '../Models/userModel.js';
 
 export const addProduct = async (req, res) => {
     try {
-        const { productName, productDesc, productPrice, category, brand } = req.body
+        const { productName, productDesc, productPrice, category, brand, stock } = req.body
         const userId = req.id
 
-        if (!productName || !productDesc || !productPrice || !category || !brand) {
+        if (!productName || !productDesc || !productPrice || !category || !brand || !stock) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
@@ -40,13 +40,14 @@ export const addProduct = async (req, res) => {
             productPrice,
             category,
             brand,
-            productImg, //Array of objects [{url, public_id},{url, public_id}]
+            stock: Number(stock),
+            productImg, //Array of objects [{url, public_id},{url, public_id},{url, public_id}]
         })
         const subscribers = await User.find({ isSubscribed: true }).select('email');
         const subscriberEmails = subscribers.map(u => u.email);
         if (subscriberEmails.length > 0) {
             // 2. Trigger the email utility (don't 'await' if you don't want to slow down the response)
-            sendNewProductNotification(subscriberEmails, newProduct).catch(err => 
+            sendNewProductNotification(subscriberEmails, newProduct).catch(err =>
                 console.error("Subscription Email Error:", err)
             );
         }
@@ -122,7 +123,7 @@ export const deleteProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
     try {
         const { productId } = req.params;
-        const { productName, productDesc, productPrice, category, brand, existingImages } = req.body
+        const { productName, productDesc, productPrice, category, brand, stock, existingImages } = req.body
         const product = await Product.findById(productId)
         if (!product) {
             return res.status(404).json({
@@ -174,6 +175,7 @@ export const updateProduct = async (req, res) => {
         product.productPrice = productPrice || product.productPrice
         product.category = category || product.category
         product.brand = brand || product.brand
+        product.stock = stock !== undefined ? Number(stock) : product.stock
         product.productImg = updatedImages
 
         await product.save()

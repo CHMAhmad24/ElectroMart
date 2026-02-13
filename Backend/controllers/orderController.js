@@ -13,6 +13,30 @@ export const placeOrder = async (req, res) => {
             return res.status(400).json({ success: false, message: "No products provided" });
         }
 
+        for (const item of products) {
+            const product = await Product.findById(item.productId);
+
+            if (!product) {
+                return res.status(404).json({ success: false, message: `Product not found` });
+            }
+
+            if (product.stock < item.quantity) {
+                return res.status(400).json({
+                    success: false,
+                    message: `Sorry, only ${product.stock} units of ${product.productName} left in stock.`
+                });
+            }
+        }
+
+        const stockUpdates = products.map(item => ({
+            updateOne: {
+                filter: { _id: item.productId },
+                update: { $inc: { stock: -item.quantity } } // Stock kam kar rahe hain
+            }
+        }));
+
+        await Product.bulkWrite(stockUpdates);
+
         const formattedProducts = products.map(item => ({
             productId: item.productId,
             quantity: item.quantity
@@ -128,6 +152,19 @@ export const updateStatus = async (req, res) => {
         if (!allowedStatus.includes(status)) {
             return res.status(400).json({ success: false, message: "Invalid status value" });
         }
+        
+        if (status === "Cancelled") {
+            const order = await Order.findById(orderId);
+            if (order && order.status !== "Cancelled") {
+                const stockRestores = order.products.map(item => ({
+                    updateOne: {
+                        filter: { _id: item.productId },
+                        update: { $inc: { stock: item.quantity } } // Stock wapas badha diya
+                    }
+                }));
+                await Product.bulkWrite(stockRestores);
+            }
+        }
 
         const updatedOrder = await Order.findByIdAndUpdate( // Changed from orderModel
             orderId,
@@ -169,7 +206,7 @@ export const getSalesData = async (req, res) => {
             {
                 $group: {
                     _id: {
-                        $dateToString: { format: "%Y-%m-%d", date: "$createdAt", timezone: "+05:00"  }
+                        $dateToString: { format: "%Y-%m-%d", date: "$createdAt", timezone: "+05:00" }
                     },
                     amount: { $sum: "$amount" },
                 },

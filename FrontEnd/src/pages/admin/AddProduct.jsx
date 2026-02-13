@@ -45,6 +45,7 @@ const AddProduct = () => {
     formData.append("productPrice", productData.productPrice);
     formData.append("productDesc", productData.productDesc);
     formData.append("category", productData.category);
+    formData.append("stock", productData.stock);
     formData.append("brand", productData.brand);
 
     if (!productData.productImg || productData.productImg.length === 0) {
@@ -97,6 +98,12 @@ const AddProduct = () => {
               <div className='space-y-2'>
                 <Label className='font-bold text-sm text-gray-700'>Product Price</Label>
                 <Input type='Number' name='productPrice' value={productData.productPrice} onChange={handleChange} required className="bg-white" />
+              </div>
+
+              <div className='space-y-2'>
+                <Label className='font-bold text-sm text-gray-700'>Available Stock</Label>
+                <Input
+                  type='number' name='stock' value={productData.stock} onChange={handleChange} placeholder='e.g. 50' required className="bg-white" />
               </div>
 
               <div className='space-y-2'>
