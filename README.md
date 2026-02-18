@@ -1,6 +1,7 @@
 # 🛒 ElectroMart
 
-**ElectroMart** is a premium e-commerce platform built for the next generation of tech shopping. It features a sleek UI, fast performance, and a user-centric shopping experience.
+**ElectroMart** is a premium e-commerce platform built for the next generation of tech shopping. 
+It features a sleek UI, fast performance, and a user-centric shopping experience.
 
 🔗 **Live Demo:** [https://electro-mart-shop.vercel.app/](https://electro-mart-shop.vercel.app/)
 
@@ -49,11 +50,13 @@ ElectroMart/
 ├── LICENSE                    # ISC License
 └── README.md                  # Project documentation
 
+
 ## 🛠️ Installation & Setup
 
 Follow these steps to get the project locally:
 
-Since this project uses **Serverless Functions**, the standard `node server.js` command won't work. To simulate the production environment locally:
+Since this project uses **Serverless Functions**, the standard `node server.js` command won't work.
+To simulate the production environment locally:
 
 1.  **Clone the Repo:**
     ```bash
