@@ -26,7 +26,6 @@
 ## 🏗️ Project Structure
 ElectroMart/
 ├── 📁 FrontEnd/                # React Frontend (Vite)
-│   ├── 📁 public/
 │   ├── 📁 src/
 │   │   ├── 📁 components/     # Reusable React components
 │   │   │   └── 📁 ui/         # Shadcn UI components
