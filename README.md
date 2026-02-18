@@ -24,30 +24,30 @@
 
 
 ## 🏗️ Project Structure
+```text
 ElectroMart/
 ├── 📁 FrontEnd/                # React Frontend (Vite)
 │   ├── 📁 src/
-│   │   ├── 📁 components/     # Reusable React components
-│   │   │   └── 📁 ui/         # Shadcn UI components
-│   │   ├── 📁 hooks/          # Custom hooks logic
+│   │   ├── 📁 components/     # Reusable React & Shadcn UI components
 │   │   ├── 📁 pages/          # App pages (Home, Shop, Cart, etc.)
-│   │   ├── 📁 assets/         # Images and global styles
 │   │   ├── App.jsx            # Main App component
 │   │   └── main.jsx           # Entry point
-│   ├── .env                   # Frontend environment variables
 │   └── vite.config.js         # Vite configuration
 │
 ├── 📁 BackEnd/                # Serverless Backend
-│   ├── 📁 controllers/        # API logic & route handlers
-│   ├── 📁 middlewares/        # Security & Auth middlewares
-│   ├── 📁 routes/             # API endpoint definitions
+│   ├── 📁 Config/             # Environment & Global configurations
+│   ├── 📁 DataBase/           # Database connection & setup
+│   ├── 📁 Email_Verify/       # Email sending & verification logic (Nodemailer/SendGrid)
+│   ├── 📁 Middlewares/        # Auth & validation middlewares
+│   ├── 📁 Models/             # Database schemas
+│   ├── 📁 Routes/             # API endpoint definitions
+│   ├── 📁 controllers/        # Business logic & route handlers
 │   ├── .env                   # Server environment variables
 │   ├── package.json           # Backend dependencies
 │   └── server.js              # Serverless entry point
 │
 ├── LICENSE                    # ISC License
 └── README.md                  # Project documentation
-
 
 ## 🛠️ Installation & Setup
 
