@@ -49,7 +49,7 @@ ElectroMart/
 │
 ├── LICENSE                    # ISC License
 └── README.md                  # Project documentation
-
+```
 
 ## 🛠️ Installation & Setup
 
