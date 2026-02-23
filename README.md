@@ -68,6 +68,7 @@ To simulate the production environment locally:
     cd FrontEnd
     npm install
     cd BackEnd
+    npm install
     ```
 3.  **Install Vercel CLI (Optional but Recommended):**
     To run serverless functions locally:
