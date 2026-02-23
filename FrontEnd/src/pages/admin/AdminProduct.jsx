@@ -61,6 +61,21 @@ const AdminProduct = () => {
         setEditProduct(prev => ({ ...prev, [name]: value }))
     }
 
+    useEffect(() => {
+        const getAllProducts = async () => {
+            try {
+                const res = await axios.get(`${BACKEND_URL}/api/v1/products/getAllProducts`)
+                if (res.data.success) {
+                    dispatch(setProducts(res.data.products))
+                }
+            } catch (error) {
+                console.log(error)
+                toast.error("Failed to load products")
+            }
+        }
+        getAllProducts();
+    }, [])
+
     const handleSave = async (e) => {
         e.preventDefault()
         const formData = new FormData()
