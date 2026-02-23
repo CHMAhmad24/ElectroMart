@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { Edit, Loader2, Search, Trash2, Package } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card } from '@/components/ui/card'
 
