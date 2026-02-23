@@ -3,7 +3,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from './ui/button';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
-
 const FilterSideBar = ({
   allProducts,
   priceRange,
@@ -58,52 +57,60 @@ const FilterSideBar = ({
         />
       </div>
 
-      {/* Category Buttons with Background & Outline */}
-      <div className='mb-6'>
+      {/* Category Dropdown (Updated to match Brands) */}
+      <div className='mb-6 overflow-hidden p-1'>
         <h1 className='font-semibold text-lg mb-3 text-gray-800'>Category</h1>
-        <div className='flex flex-wrap gap-2'>
-          {uniqueCategory.map((item, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setCategory(item);
-                handleMobileClose();
-              }}
-              className={`px-4 py-2 text-sm rounded-full border transition-all duration-200 cursor-pointer
-                    ${category === item
-                  ? 'bg-blue-600 text-white border-blue-600 shadow-md font-medium'
-                  : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400 hover:bg-blue-50'
-                }`}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+        <Select
+          value={category}
+          onValueChange={(value) => {
+            setCategory(value);
+            handleMobileClose();
+          }}
+        >
+          <SelectTrigger className="w-full h-11 bg-white border-slate-200 text-black shadow-sm transition-all duration-200 rounded-xl cursor-pointer">
+            <SelectValue placeholder="Select a Category" />
+          </SelectTrigger>
+
+          <SelectContent position="popper" className="z-[9999] bg-white/95 backdrop-blur-md border-slate-200 shadow-xl rounded-xl max-h-[300px]">
+            <SelectGroup className="p-1">
+              {uniqueCategory.map((item, index) => (
+                <SelectItem
+                  key={index}
+                  value={item}
+                  className="w-60 rounded-lg py-2.5 px-3 focus:bg-blue-50 focus:text-blue-700 cursor-pointer"
+                >
+                  <span className="text-sm font-medium tracking-wide">
+                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                  </span>
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Brands */}
       <div className='mb-6 overflow-hidden p-1'>
         <h1 className='font-semibold text-lg mb-3 text-gray-800'>Brands</h1>
         <Select
-          className='bg-white p-2.5 w-full rounded-lg text-sm outline-none focus:ring-2 transition-all cursor-pointer'
           value={brand}
           onValueChange={(value) => {
             setBrand(value);
-            handleMobileClose(false);
+            handleMobileClose();
           }}
         >
-          <SelectTrigger className="w-full h-11 bg-white border-slate-200 text-black shadow-sm transition-all duration-200 rounded-xl cursor-pointer focus:border-none">
-            <SelectValue placeholder="Select a Brand" className='text-black ' />
+          <SelectTrigger className="w-full h-11 bg-white border-slate-200 text-black shadow-sm transition-all duration-200 rounded-xl cursor-pointer">
+            <SelectValue placeholder="Select a Brand" />
           </SelectTrigger>
 
-          <SelectContent position="popper" className="z-[9999] bg-white/95 backdrop-blur-md border-slate-200 shadow-xl rounded-xl max-h-[300px] overflow-hidden">
+          <SelectContent position="popper" className="z-[9999] bg-white/95 backdrop-blur-md border-slate-200 shadow-xl rounded-xl max-h-[300px]">
             <SelectGroup className="p-1">
               {uniqueBrands && uniqueBrands.length > 0 ? (
                 uniqueBrands.map((item, index) => (
                   <SelectItem
                     key={index}
                     value={item}
-                    className="w-60 rounded-lg py-2.5 px-3 focus:bg-blue-50 focus:text-blue-700 cursor-pointer transition-colors duration-150"
+                    className="w-60 rounded-lg py-2.5 px-3 focus:bg-blue-50 focus:text-blue-700 cursor-pointer"
                   >
                     <span className="text-sm font-medium tracking-wide">
                       {item.toUpperCase()}
@@ -120,8 +127,7 @@ const FilterSideBar = ({
         </Select>
       </div>
 
-      {/* Price Range */}
-      {/* Price Range */}
+      {/* Price Range Section */}
       <div className='mb-6'>
         <h1 className='font-semibold text-lg mb-2 text-gray-800'>Price Range</h1>
         <div className='bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4'>
@@ -132,13 +138,12 @@ const FilterSideBar = ({
 
         <div className='flex flex-col gap-4'>
           <div className='flex gap-2 items-center'>
-            <input type="number" className='w-full p-2 text-xs border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 outline-none' value={priceRange[0]} onChange={handleMinChange} />
+            <input type="number" className='w-full p-2 text-xs border border-gray-300 rounded-md outline-none' value={priceRange[0]} onChange={handleMinChange} />
             <span className='text-gray-400'>-</span>
-            <input type="number" className='w-full p-2 text-xs border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-500 outline-none' value={priceRange[1]} onChange={handleMaxChange} />
+            <input type="number" className='w-full p-2 text-xs border border-gray-300 rounded-md outline-none' value={priceRange[1]} onChange={handleMaxChange} />
           </div>
 
           <div className='px-1'>
-            {/* Min Price Slider (Max: 1000) */}
             <input
               type="range"
               min="0"
@@ -147,13 +152,10 @@ const FilterSideBar = ({
               value={priceRange[0]}
               onChange={handleMinChange}
               style={{
-                // (Current Value / Max Value) * 100
                 background: `linear-gradient(to right, #2563eb 0%, #2563eb ${(priceRange[0] / 1000) * 100}%, #e5e7eb ${(priceRange[0] / 1000) * 100}%, #e5e7eb 100%)`,
               }}
               className='w-full h-1.5 rounded-lg appearance-none cursor-pointer accent-blue-600 mb-4'
             />
-
-            {/* Max Price Slider (Max: 9999) */}
             <input
               type="range"
               min="0"
@@ -162,7 +164,6 @@ const FilterSideBar = ({
               value={priceRange[1]}
               onChange={handleMaxChange}
               style={{
-                // (Current Value / Max Value) * 100
                 background: `linear-gradient(to right, #2563eb 0%, #2563eb ${(priceRange[1] / 9999) * 100}%, #e5e7eb ${(priceRange[1] / 9999) * 100}%, #e5e7eb 100%)`,
               }}
               className='w-full h-1.5 rounded-lg appearance-none cursor-pointer accent-blue-600'
@@ -171,11 +172,10 @@ const FilterSideBar = ({
         </div>
       </div>
 
-      {/* Reset Button */}
       <Button
         onClick={resetFilters}
         variant="outline"
-        className="mt-4 w-full cursor-pointer py-6 rounded-xl font-bold border-2 border-red-100 text-red-500 hover:bg-red-50 hover:text-red-600 transition-all"
+        className="mt-4 w-full py-6 rounded-xl font-bold border-2 border-red-100 text-red-500 hover:bg-red-50 transition-all"
       >
         Reset All Filters
       </Button>
