@@ -27,28 +27,29 @@ It features a sleek UI, fast performance, and a user-centric shopping experience
 ## 🏗️ Project Structure
 ```text
 ElectroMart/
-├── 📁 FrontEnd/                # React Frontend (Vite)
-│   ├── 📁 src/
-│   │   ├── 📁 components/     # Reusable React & Shadcn UI components
-│   │   ├── 📁 pages/          # App pages (Home, Shop, Cart, etc.)
-│   │   ├── App.jsx            # Main App component
-│   │   └── main.jsx           # Entry point
-│   └── vite.config.js         # Vite configuration
+├── 📁 FrontEnd/               # React Frontend (Vite)
+│   └── 📁 src/
+│       ├── 📁 Assets/         # Images, Icons, and static media
+│       ├── 📁 CSS/            # Stylesheets (Sass/Tailwind/Global CSS)
+│       ├── 📁 Context/        # React Context API providers
+│       ├── 📁 ReduxToolkit/   # State management (Slices & Store)
+│       ├── 📁 components/     # UI and Shared components
+│       │   └── 📁 ui/         # Shadcn/Base UI elements
+│       ├── 📁 lib/            # Utility functions & Third-party configs
+│       └── 📁 pages/          # Application routes/screens
+│           └── 📁 admin/      # Admin specific pages
 │
 ├── 📁 BackEnd/                # Serverless Backend
 │   ├── 📁 Config/             # Environment & Global configurations
-│   ├── 📁 DataBase/           # Database connection & setup
-│   ├── 📁 Email_Verify/       # Email sending & verification logic (Nodemailer/SendGrid)
-│   ├── 📁 Middlewares/        # Auth & validation middlewares
-│   ├── 📁 Models/             # Database schemas
+│   ├── 📁 DataBase/           # Database connection logic
+│   ├── 📁 Email_Verify/       # Nodemailer/SendGrid logic
+│   ├── 📁 Middlewares/        # Auth & validation filters
+│   ├── 📁 Models/             # Database schemas (Mongoose/Sequelize)
 │   ├── 📁 Routes/             # API endpoint definitions
-│   ├── 📁 controllers/        # Business logic & route handlers
-│   ├── .env                   # Server environment variables
-│   ├── package.json           # Backend dependencies
-│   └── server.js              # Serverless entry point
+│   └── 📁 controllers/        # Business logic & handlers
 │
-├── LICENSE                    # ISC License
-└── README.md                  # Project documentation
+├── LICENSE                    # Project License
+└── README.md                  # Documentation
 ```
 
 ## 🛠️ Installation & Setup
