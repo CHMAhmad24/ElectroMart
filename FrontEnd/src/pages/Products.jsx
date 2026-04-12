@@ -141,6 +141,7 @@ const Products = () => {
                         />
                     </div>
                 </aside>
+                <ParticlesBackground/>
 
                 {/* --- MAIN SECTION --- */}
                 <div className='flex flex-col flex-1 lg:mt-6 !lg:-mt-5'>
@@ -178,7 +179,6 @@ const Products = () => {
                     </div>
                 </div>
             </div>
-            <ParticlesBackground/>
 
             {showGoTop && (
                 <button
