@@ -25,6 +25,7 @@ import AddressForm from './pages/AddressForm'
 import OrderSuccess from './pages/OrderSuccess'
 import Login_Signup from './pages/Login_Signup'
 import ForgotPassword from './pages/ForgotPassword'
+import ParticlesBackground from './components/ParticlesBackground'
 // import Hero from './components/Hero'
 // import Features from './components/Features'
 
@@ -63,7 +64,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/products',
-    element: <><Navbar /><Products /></>,
+    element: <><Navbar /><ParticlesBackground/><Products /></>,
   },
   {
     path: '/products/:id',
