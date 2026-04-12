@@ -114,7 +114,7 @@ const Products = () => {
                     </div>
                 </div>
 
-                <ParticlesBackground/>
+                
 
                 <aside className={`
                     fixed inset-y-0 left-0 z-100 w-[75%] bg-white p-6 shadow-2xl transform transition-transform duration-300 ease-in-out
