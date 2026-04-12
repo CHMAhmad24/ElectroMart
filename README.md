@@ -79,8 +79,6 @@ To simulate the production environment locally:
     ```bash
     vercel dev
     ```
-    *This command will start both the frontend and the serverless backend on your local machine.*
-    ```
 
 ## 🤝 Contributing
 Contributions are welcome! Please feel free to submit a Pull Requests.
