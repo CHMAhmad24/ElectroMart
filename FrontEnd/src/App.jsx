@@ -25,7 +25,6 @@ import AddressForm from './pages/AddressForm'
 import OrderSuccess from './pages/OrderSuccess'
 import Login_Signup from './pages/Login_Signup'
 import ForgotPassword from './pages/ForgotPassword'
-import ParticlesBackground from './components/ParticlesBackground'
 // import Hero from './components/Hero'
 // import Features from './components/Features'
 
@@ -36,11 +35,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <><ParticlesBackground /><Login_Signup /></>,
+    element: <><Login_Signup /></>,
   },
   {
     path: '/signup',
-    element: <><ParticlesBackground /><Login_Signup /></>,
+    element: <><Login_Signup /></>,
   },
   {
     path: '/auth-success',
@@ -60,11 +59,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/profile/:Id',
-    element: <ProtecoutetedR><Navbar /><Profile /></ProtecoutetedR>,
+    element: <ProtectedRoute> <Navbar /><Profile /> </ProtectedRoute>,
   },
   {
     path: '/products',
-    element: <><ParticlesBackground /> <Navbar /><Products /></>,
+    element: <><Navbar /><Products /></>,
   },
   {
     path: '/products/:id',

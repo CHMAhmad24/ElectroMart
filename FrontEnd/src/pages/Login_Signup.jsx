@@ -5,13 +5,15 @@ import { Button } from '@/components/ui/button';
 import { FaQuestion } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import '../CSS/style.css'
+import ParticlesBackground from '@/components/ParticlesBackground';
 
 function Login_Signup() {
   const location = useLocation();
   const [isActive, setIsActive] = useState(location.pathname === '/signup');
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-linear-to-r from-[#e2e2e2] to-[#c9d6ff] p-5 font-['poppins']">
+    <div className="flex items-center justify-center min-h-screen bg-black p-5 font-['poppins']">
+      <ParticlesBackground/>
       <div className="hidden lg:relative lg:block lg:w-237.5 lg:h-137.5 bg-white rounded-[30px] shadow-[0_0_30px_rgba(0,0,0,0.2)] overflow-hidden">
         <div className={`absolute top-0 right-0 w-1/2 h-full bg-white flex items-center p-10 transition-all duration-1800 ease-in-out
           ${isActive ? '-translate-x-full opacity-0 invisible z-0' : 'translate-x-0 opacity-100 visible z-10'}`}>

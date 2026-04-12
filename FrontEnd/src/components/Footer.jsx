@@ -15,6 +15,7 @@ import { setProducts } from '@/ReduxToolkit/productSlice';
 import axios from 'axios';
 import { setUser } from '@/ReduxToolkit/userSlice';
 import { Button } from './ui/button';
+import ParticlesBackground from './ParticlesBackground';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const Footer = () => {
@@ -97,14 +98,14 @@ const Footer = () => {
     console.log("Current User from Redux:", user);
     return (
         <footer className="bg-[linear-gradient(to_bottom_right,#111827,#1f2937,#000)] h-max text-white py-14 px-6 lg:px-24">
-            <div className="max-w-[1400px] mx-auto">
+            <div className="max-w-350 mx-auto">
 
                 {/* Main Footer Wrapper */}
                 <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-4">
 
                     {/* 1. Company Info */}
-                    <div className="flex-1 space-y-6 min-w-[280px]">
-                        <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
+                    <div className="flex-1 space-y-6 min-w-70">
+                        <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-blue-400 to-indigo-400">
                             ElectroMart
                         </h3>
                         <p className="text-gray-400 text-sm leading-relaxed max-w-xs">

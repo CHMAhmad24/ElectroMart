@@ -47,7 +47,7 @@ const FilterSideBar = ({
     <div className='w-full'>
       {/* Search */}
       <div className='mb-6'>
-        <p className='text-xs font-bold uppercase text-gray-500 mb-2'>Search</p>
+        <p className='text-xs font-bold uppercase text-white mb-2'>Search</p>
         <Input
           type="text"
           placeholder="Search ..."
@@ -59,7 +59,7 @@ const FilterSideBar = ({
 
       {/* Category Dropdown (Updated to match Brands) */}
       <div className='mb-6 overflow-hidden p-1'>
-        <h1 className='font-semibold text-lg mb-3 text-gray-800'>Category</h1>
+        <h1 className='font-semibold text-lg mb-3 text-white'>Category</h1>
         <Select
           value={category}
           onValueChange={(value) => {
@@ -91,7 +91,7 @@ const FilterSideBar = ({
 
       {/* Brands */}
       <div className='mb-6 overflow-hidden p-1'>
-        <h1 className='font-semibold text-lg mb-3 text-gray-800'>Brands</h1>
+        <h1 className='font-semibold text-lg mb-3 text-white'>Brands</h1>
         <Select
           value={brand}
           onValueChange={(value) => {
@@ -103,7 +103,7 @@ const FilterSideBar = ({
             <SelectValue placeholder="Select a Brand" />
           </SelectTrigger>
 
-          <SelectContent position="popper" className="z-[9999] bg-white/95 backdrop-blur-md border-slate-200 shadow-xl rounded-xl max-h-[300px]">
+          <SelectContent position="popper" className="z-9999 bg-white/95 backdrop-blur-md border-slate-200 shadow-xl rounded-xl max-h-75">
             <SelectGroup className="p-1">
               {uniqueBrands && uniqueBrands.length > 0 ? (
                 uniqueBrands.map((item, index) => (
@@ -118,7 +118,7 @@ const FilterSideBar = ({
                   </SelectItem>
                 ))
               ) : (
-                <div className="py-6 text-center text-sm text-slate-400 italic">
+                <div className="py-6 text-center text-sm text-white italic">
                   No brands found
                 </div>
               )}
@@ -129,7 +129,7 @@ const FilterSideBar = ({
 
       {/* Price Range Section */}
       <div className='mb-6'>
-        <h1 className='font-semibold text-lg mb-2 text-gray-800'>Price Range</h1>
+        <h1 className='font-semibold text-lg mb-2 text-white'>Price Range</h1>
         <div className='bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4'>
           <p className='text-xs text-blue-700 font-bold'>
             $ {priceRange[0].toLocaleString()} - $ {priceRange[1].toLocaleString()}
@@ -138,9 +138,9 @@ const FilterSideBar = ({
 
         <div className='flex flex-col gap-4'>
           <div className='flex gap-2 items-center'>
-            <input type="number" className='w-full p-2 text-xs border border-gray-300 rounded-md outline-none' value={priceRange[0]} onChange={handleMinChange} />
-            <span className='text-gray-400'>-</span>
-            <input type="number" className='w-full p-2 text-xs border border-gray-300 rounded-md outline-none' value={priceRange[1]} onChange={handleMaxChange} />
+            <input type="number" className='w-full p-2 text-xs text-white border border-gray-300 rounded-md outline-none' min="0" max="1000" value={priceRange[0]} onChange={handleMinChange} />
+            <span className='text-white'>-</span>
+            <input type="number" className='w-full p-2 text-xs text-white border border-gray-300 rounded-md outline-none' min="0" max="9999" value={priceRange[1]} onChange={handleMaxChange} />
           </div>
 
           <div className='px-1'>
