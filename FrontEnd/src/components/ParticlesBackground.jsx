@@ -77,7 +77,7 @@ export default function ParticlesBackground() {
 
     <canvas
       ref={canvasRef}
-      className="absolute top-o left-0 w-full h-full pointer-events-none z-0">
+      className="absolute top-o left-0 w-full h-full fixed pointer-events-none z-0">
 
     </canvas>
 
