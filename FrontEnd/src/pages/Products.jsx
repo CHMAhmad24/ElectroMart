@@ -112,9 +112,7 @@ const Products = () => {
                             className="pl-10 h-12 bg-white border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
-                </div>
-
-                
+                </div>                
 
                 <aside className={`
                     fixed inset-y-0 left-0 z-100 w-[75%] bg-white p-6 shadow-2xl transform transition-transform duration-300 ease-in-out
