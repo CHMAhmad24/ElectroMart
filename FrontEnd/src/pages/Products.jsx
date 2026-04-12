@@ -114,6 +114,8 @@ const Products = () => {
                     </div>
                 </div>
 
+                <ParticlesBackground/>
+
                 <aside className={`
                     fixed inset-y-0 left-0 z-100 w-[75%] bg-white p-6 shadow-2xl transform transition-transform duration-300 ease-in-out
                     ${isFilterOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -141,7 +143,6 @@ const Products = () => {
                         />
                     </div>
                 </aside>
-                <ParticlesBackground/>
 
                 {/* --- MAIN SECTION --- */}
                 <div className='flex flex-col flex-1 lg:mt-6 !lg:-mt-5'>
