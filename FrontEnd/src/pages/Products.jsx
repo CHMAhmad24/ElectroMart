@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setProducts } from '@/ReduxToolkit/productSlice'
 import { ArrowUp, ChevronUp, Filter, Search, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
-
+import ParticlesBackground from '@/components/ParticlesBackground'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -99,7 +99,7 @@ const Products = () => {
 
     return (
         <div className='pt-18 pb-5 px-4 sm:px-6 min-h-screen bg-black'>
-            
+            <ParticlesBackground/>
             <div className='max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 relative'>
                 <div className='lg:hidden mb-6'>
                     <div className='relative mt-3 -mb-7'>
@@ -191,6 +191,7 @@ const Products = () => {
             {isFilterOpen && (
                 <div className='fixed inset-0 bg-black/50 z-90 lg:hidden backdrop-blur-sm' onClick={() => setIsFilterOpen(false)} />
             )}
+            <ParticlesBackground/>
         </div>
     )
 }
