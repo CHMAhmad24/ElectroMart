@@ -1,12 +1,13 @@
 import React from 'react'
 import { Zap, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import ParticlesBackground from './ParticlesBackground';
 
 const Hero = () => {
     const navigate = useNavigate()
     return (
-        <section className="relative overflow-hidden bg-gradient-to-br from-white via-blue-50 to-purple-100 px-6 py-16 md:px-12 lg:px-24 max-w-[1600px] mx-auto flex items-center mt-12">
-
+        <section className="relative overflow-hidden bg-black px-6 py-16 md:px-12 lg:px-24 max-w-[1600px] mx-auto flex items-center mt-12">
+            <ParticlesBackground />
             {/* Background Mesh Gradient */}
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-purple-100 via-blue-50 to-white opacity-70"></div>
 
@@ -23,11 +24,11 @@ const Hero = () => {
 
                         {/* Title */}
                         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6 tracking-tight">
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-blue-800 to-purple-700">
+                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-500">
                                 Premium Electronics
                             </span>
                             <br className="hidden sm:block" />
-                            <span className="text-gray-800"> For Modern Life</span>
+                            <span className="text-gray-400"> For Modern Life</span>
                         </h1>
 
                         {/* Subtitle */}
@@ -51,15 +52,15 @@ const Hero = () => {
                     {/* Stats */}
                     <div className="grid grid-cols-3 gap-4 sm:gap-10 border-t border-gray-100 pt-8 w-full">
                         <div className="text-center lg:text-left">
-                            <div className="text-xl sm:text-2xl font-black text-gray-900">50K+</div>
+                            <div className="text-xl sm:text-2xl font-black text-gray-500">50K+</div>
                             <div className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-gray-400 font-mono">Customers</div>
                         </div>
                         <div className="text-center lg:text-left">
-                            <div className="text-xl sm:text-2xl font-black text-gray-900">10K+</div>
+                            <div className="text-xl sm:text-2xl font-black text-gray-500">10K+</div>
                             <div className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-gray-400 font-mono">Products</div>
                         </div>
                         <div className="text-center lg:text-left">
-                            <div className="text-xl sm:text-2xl font-black text-gray-900">99.9%</div>
+                            <div className="text-xl sm:text-2xl font-black text-gray-500">99.9%</div>
                             <div className="text-[10px] sm:text-xs uppercase tracking-widest font-bold text-gray-400 font-mono">Uptime</div>
                         </div>
                     </div>
