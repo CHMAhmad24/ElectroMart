@@ -22,7 +22,7 @@ const AddressForm = () => {
 
     const [formData, setFormData] = useState({
         fullName: "", phone: "", email: "", address: "",
-        city: "", state: "", zip: "", country: "",
+        city: "", state: "", zip: "", 
     })
 
     const { cart, addresses, selectedAddress } = useSelector((store) => store.product)
@@ -48,8 +48,6 @@ const AddressForm = () => {
             return toast.error("zip code is required");
         } else if (!formData.state) {
             return toast.error("State is required");
-        } else if (!formData.country) {
-            return toast.error("Country is required");
         }
 
         // 2. Email Validation (Regex)
@@ -71,7 +69,7 @@ const AddressForm = () => {
         
         dispatch(addAddress(formData))
         setShowForm(false)
-        setFormData({ fullName: "", phone: "", email: "", address: "", city: "", state: "", zip: "", country: "" })
+        setFormData({ fullName: "", phone: "", email: "", address: "", city: "", state: "", zip: "" })
         toast.success("Address saved successfully!");
     }
 
@@ -164,10 +162,6 @@ const AddressForm = () => {
                                             <Label>Zip Code</Label>
                                             <Input name='zip' placeholder="54000" value={formData.zip} onChange={handleChange} />
                                         </div>
-                                        <div className="space-y-2">
-                                            <Label>Country</Label>
-                                            <Input name='country' placeholder="Pakistan" value={formData.country} onChange={handleChange} />
-                                        </div>
                                         <div className='md:col-span-2 flex gap-3 pt-4'>
                                             <Button onClick={handleSave} className="flex-1 bg-blue-600 hover:bg-blue-700 cursor-pointer">Save Address</Button>
                                             {addresses?.length > 0 && <Button variant="outline" className='cursor-pointer' onClick={() => setShowForm(false)}>Cancel</Button>}
@@ -208,7 +202,7 @@ const AddressForm = () => {
                     </div>
 
                     {/* Right Side: Order Summary */}
-                    <div className='w-full lg:w-[400px] lg:sticky lg:top-28'>
+                    <div className='w-full lg:w-100 lg:sticky lg:top-28'>
                         <Card className="shadow-sm">
                             <CardHeader className="bg-gray-50/50">
                                 <CardTitle>Order Summary</CardTitle>
@@ -247,7 +241,7 @@ const AddressForm = () => {
                                 </Button>
 
                                 <p className='text-[12px] text-center text-gray-600 mt-4'>
-                                    By placing your order, you agree to our Terms of Services.
+                                    By placing your order, you agree to our Terms and Services.
                                 </p>
                             </CardContent>
                         </Card>
