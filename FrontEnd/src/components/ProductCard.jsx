@@ -62,7 +62,7 @@ const ProductCard = ({ product, loading }) => {
             {
                 loading ?
                     <div className='px-2 space-y-2 my-2'>
-                        <Skeleton className='w-max h-4' />
+                        <Skeleton className='w-90 h-4' />
                         <Skeleton className='w-25 h-4' />
                         <Skeleton className='w-37.5 h-8' />
                     </div> :
