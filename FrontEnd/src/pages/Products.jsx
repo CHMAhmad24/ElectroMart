@@ -98,8 +98,8 @@ const Products = () => {
     }, [])
 
     return (
-        <div className='pt-18 pb-5 px-4 sm:px-6 min-h-screen bg-blue-300'>
-            
+        <div className='pt-18 pb-5 px-4 sm:px-6 min-h-screen bg-black'>
+            <ParticlesBackground/>
             <div className='max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 relative'>
                 <div className='lg:hidden mb-6'>
                     <div className='relative mt-3 -mb-7'>
