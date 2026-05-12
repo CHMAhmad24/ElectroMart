@@ -67,9 +67,9 @@ const ProductCard = ({ product, loading }) => {
                         <Skeleton className='w-37.5 h-8' />
                     </div> :
                     <div className='px-2 space-y-1 '>
-                        <h1 className='font-semibold h-12 line-clamp-2 '>{productName}</h1>
+                        <h1 className='font-semibold h-12 line-clamp-2 text-white '>{productName}</h1>
                         <div className='flex flex-row justify-between align-middle'>
-                            <h2 className='font-bold '>$ {productPrice}</h2>
+                            <h2 className='font-bold text-white '>$ {productPrice}</h2>
                             <h2 className={`font-bold ${stock <= 5 ? 'text-red-600' :
                                     stock <= 10 ? 'text-yellow-600' :
                                         'text-green-600'
