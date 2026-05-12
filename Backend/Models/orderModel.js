@@ -19,8 +19,6 @@ const orderSchema = new mongoose.Schema({
     shipping: { type: Number, required: true },
     currency: { type: String, default: "$" },
     status: { type: String, enum: ["Pending", "Paid", "Cancelled"], default: "Pending" },
-    paymentMethod: { type: String, default: "COD" },
-    payment: { type: Boolean, default: false }, // false because COD
     date: { type: Number, required: true },
 },{ timestamps: true });
 
