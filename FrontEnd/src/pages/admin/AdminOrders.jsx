@@ -96,8 +96,10 @@ const AdminOrders = () => {
                     <tr key={order._id} className="hover:bg-blue-50/30 transition-colors">
                       <td className="px-6 py-4 font-mono text-xs font-bold text-blue-600">#{order._id.slice(-8)}</td>
                       <td className="px-6 py-4">
-                        <div className="font-bold text-gray-800">{order.user?.firstName} {order.user?.lastName}</div>
-                        <div className="text-xs text-gray-500">{order.user?.email}</div>
+                        <div className="font-bold text-gray-800">{order.address?.fullName || `${order.user?.firstName} ${order.user?.lastName}`}</div>
+                        <div className="text-xs text-gray-500 max-w-[200px] truncate" title={`${order.address?.address}, ${order.address?.city}`}>
+                          {order.address?.address ? `${order.address.address}, ${order.address.city}` : "No Address"}
+                        </div>
                       </td>
                       <td className="px-6 py-4">
                         {order.products.map((p, idx) => (
