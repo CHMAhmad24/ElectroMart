@@ -1,5 +1,5 @@
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { user as User } from "../Models/userModel.js";
 
 // 3. Google Strategy Logic
@@ -14,7 +14,6 @@ passport.use(
         async (accessToken, refreshToken, profile, done) => { // Changed 'cb' to 'done' for clarity
             try {
                 let user = await User.findOne({ googleId: profile.id });
-s
                 if (!user) {
                     user = await User.findOne({ email: profile.emails[0].value });
                     if (user) {

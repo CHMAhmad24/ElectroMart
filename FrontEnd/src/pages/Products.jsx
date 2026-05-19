@@ -99,7 +99,7 @@ const Products = () => {
 
     return (
         <div className='pt-18 pb-5 px-4 sm:px-6 min-h-screen bg-black'>
-            <ParticlesBackground/>
+            <ParticlesBackground />
             <div className='max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 relative'>
                 <div className='lg:hidden mb-6'>
                     <div className='relative mt-3 -mb-7'>
@@ -112,7 +112,7 @@ const Products = () => {
                             className="pl-10 h-12 bg-white border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
-                </div>                
+                </div>
 
                 <aside className={`
                     fixed inset-y-0 left-0 z-100 w-[75%] bg-white p-6 shadow-2xl transform transition-transform duration-300 ease-in-out

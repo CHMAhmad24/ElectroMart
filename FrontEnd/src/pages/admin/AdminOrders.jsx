@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner';
-import { Package, Calendar, User, DollarSign, Clock, Loader2 } from 'lucide-react';
+import { Package, Calendar, User, DollarSign, Clock, Loader2, MapPin } from 'lucide-react';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -74,11 +74,12 @@ const AdminOrders = () => {
 
         {orders?.length === 0 ? (
           <div className='bg-white rounded-2xl p-20 text-center border-2 border-dashed border-gray-200'>
-             <Clock className='mx-auto text-gray-300 h-12 w-12 mb-4' />
-             <p className="text-gray-500 font-bold text-xl">No orders found in database.</p>
+            <Clock className='mx-auto text-gray-300 h-12 w-12 mb-4' />
+            <p className="text-gray-500 font-bold text-xl">No orders found in database.</p>
           </div>
         ) : (
           <>
+            {/* Desktop Table View */}
             <div className="hidden xl:block bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
               <table className="w-full text-left text-sm">
                 <thead className="bg-gray-50 border-b border-gray-200">
@@ -92,83 +93,114 @@ const AdminOrders = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {orders?.map((order) => (
-                    <tr key={order._id} className="hover:bg-blue-50/30 transition-colors">
-                      <td className="px-6 py-4 font-mono text-xs font-bold text-blue-600">#{order._id.slice(-8)}</td>
-                      <td className="px-6 py-4">
-                        <div className="font-bold text-gray-800">{order.user?.firstName} {order.user?.lastName}</div>
-                        <div className="text-xs text-gray-500">{order.user?.email}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        {order.products.map((p, idx) => (
-                          <div key={idx} className="text-xs text-gray-700 bg-gray-100 px-2 py-0.5 rounded-md mb-1 w-fit">
-                            {p.productId?.productName} <span className='font-black'>×{p.quantity}</span>
+                  {orders?.map((order) => {
+                    {/* Fixed: Extracting address properties safely */}
+                    const displayAddress = order.address?.streetAddress || order.address?.address || "";
+                    const displayCity = order.address?.city || "";
+                    const displayFullAddress = displayAddress ? `${displayAddress}, ${displayCity}` : "No Address provided";
+
+                    return (
+                      <tr key={order._id} className="hover:bg-blue-50/30 transition-colors">
+                        <td className="px-6 py-4 font-mono text-xs font-bold text-blue-600">#{order._id.slice(-8)}</td>
+                        <td className="px-6 py-4">
+                          <div className="font-bold text-gray-800">
+                            {order.address?.fullName || `${order.user?.firstName || 'Guest'} ${order.user?.lastName || ''}`}
                           </div>
-                        ))}
-                      </td>
-                      <td className="px-6 py-4 font-black text-gray-900">
-                        ${order.amount?.toLocaleString()}
-                      </td>
-                      <td className="px-6 py-4">
-                        <select
-                          value={order.status}
-                          onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
-                          className={`px-3 py-1 rounded-full text-[10px] font-black uppercase border cursor-pointer focus:ring-2 focus:ring-blue-500 outline-none ${getStatusColor(order.status)}`}
-                        >
-                          <option value="Pending">Pending</option>
-                          <option value="Paid">Paid</option>
-                          <option value="Cancelled">Cancelled</option>
-                        </select>
-                      </td>
-                      <td className="px-6 py-4 text-gray-500 text-xs">
-                        {new Date(order.createdAt).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))}
+                          <div className="text-xs text-gray-500 max-w-xs truncate" title={displayFullAddress}>
+                            {displayFullAddress}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          {order.products.map((p, idx) => (
+                            <div key={idx} className="text-xs text-gray-700 bg-gray-100 px-2 py-0.5 rounded-md mb-1 w-fit">
+                              {p.productId?.productName || "Unknown Product"} <span className='font-black'>×{p.quantity}</span>
+                            </div>
+                          ))}
+                        </td>
+                        <td className="px-6 py-4 font-black text-gray-900">
+                          ${order.amount?.toLocaleString()}
+                        </td>
+                        <td className="px-6 py-4">
+                          <select
+                            value={order.status}
+                            onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
+                            className={`px-3 py-1 rounded-full text-[10px] font-black uppercase border cursor-pointer focus:ring-2 focus:ring-blue-500 outline-none ${getStatusColor(order.status)}`}
+                          >
+                            <option value="Pending">Pending</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Cancelled">Cancelled</option>
+                          </select>
+                        </td>
+                        <td className="px-6 py-4 text-gray-500 text-xs">
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
 
+            {/* Mobile Cards View */}
             <div className="xl:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
-              {orders?.map((order) => (
-                <div key={order._id} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-200">
-                  <div className='flex justify-between items-start mb-4'>
-                    <span className='font-mono text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded'>#{order._id.slice(-8)}</span>
-                    <select
-                          value={order.status}
-                          onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
-                          className={`px-3 py-1 rounded-full text-[10px] font-black uppercase border outline-none ${getStatusColor(order.status)}`}
-                        >
-                          <option value="Pending">Pending</option>
-                          <option value="Paid">Paid</option>
-                          <option value="Cancelled">Cancelled</option>
-                    </select>
+              {orders?.map((order) => {
+                const displayAddress = order.address?.streetAddress || order.address?.address || "";
+                const displayCity = order.address?.city || "";
+                const displayFullAddress = displayAddress ? `${displayAddress}, ${displayCity}` : "No Address provided";
+
+                return (
+                  <div key={order._id} className="bg-white p-5 rounded-2xl shadow-sm border border-gray-200">
+                    <div className='flex justify-between items-start mb-4'>
+                      <span className='font-mono text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded'>#{order._id.slice(-8)}</span>
+                      <select
+                        value={order.status}
+                        onChange={(e) => handleStatusUpdate(order._id, e.target.value)}
+                        className={`px-3 py-1 rounded-full text-[10px] font-black uppercase border outline-none ${getStatusColor(order.status)}`}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+
+                    <div className='space-y-3'>
+                      <div className='flex items-center gap-3'>
+                        <User size={16} className='text-gray-400' />
+                        <div className='text-sm font-bold text-gray-800'>
+                          {order.address?.fullName || `${order.user?.firstName || 'User'}`} 
+                          {order.address?.email || order.user?.email ? ` (${order.address?.email || order.user?.email})` : ''}
+                        </div>
+                      </div>
+
+                      {/* Added: Address display for mobile cards */}
+                      <div className='flex items-start gap-3'>
+                        <MapPin size={16} className='text-gray-400 mt-0.5 flex-shrink-0' />
+                        <div className='text-xs text-gray-600 leading-relaxed'>{displayFullAddress}</div>
+                      </div>
+
+                      <div className='flex items-start gap-3'>
+                        <Package size={16} className='text-gray-400 mt-1 flex-shrink-0' />
+                        <div className='flex flex-wrap gap-1'>
+                          {order.products.map((p, i) => (
+                            <span key={i} className='text-[10px] bg-gray-100 px-2 py-0.5 rounded'>
+                              {p.productId?.productName || "Product"} (x{p.quantity})
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className='flex justify-between items-center border-t pt-3 mt-3'>
+                        <div className='flex items-center gap-1 text-gray-500 text-xs'>
+                          <Calendar size={14} /> {new Date(order.createdAt).toLocaleDateString()}
+                        </div>
+                        <div className='flex items-center gap-1 font-black text-lg text-gray-900'>
+                          <DollarSign size={16} />{order.amount?.toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  
-                  <div className='space-y-3'>
-                    <div className='flex items-center gap-3'>
-                      <User size={16} className='text-gray-400' />
-                      <div className='text-sm font-bold text-gray-800'>{order.user?.firstName || 'User'} ({order.user?.email})</div>
-                    </div>
-                    <div className='flex items-start gap-3'>
-                      <Package size={16} className='text-gray-400 mt-1' />
-                      <div className='flex flex-wrap gap-1'>
-                        {order.products.map((p, i) => (
-                          <span key={i} className='text-[10px] bg-gray-100 px-2 py-0.5 rounded'>{p.productId?.productName} (x{p.quantity})</span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className='flex justify-between items-center border-t pt-3 mt-3'>
-                      <div className='flex items-center gap-1 text-gray-500 text-xs'>
-                        <Calendar size={14} /> {new Date(order.createdAt).toLocaleDateString()}
-                      </div>
-                      <div className='flex items-center gap-1 font-black text-lg text-gray-900'>
-                        <DollarSign size={16} />{order.amount?.toLocaleString()}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </>
         )}
