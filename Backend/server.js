@@ -15,18 +15,19 @@ import './Models/orderModel.js';
 import './Models/productModel.js';
 
 const app = express()
-const PORT = process.env.PORT || 8000
 
 app.use(express.json())
 
-// 1. Session Configuration (Sirf Localhost ke liye bilkul simple)
+// 1. Session Configuration (Vercel/Production proxy ke liye trust proxy zaroori hai)
+app.set("trust proxy", 1); 
+
 app.use(session({
   secret: process.env.SECRET_KEY || 'your_local_secret_key',
   resave: false,
   saveUninitialized: false, 
   cookie: { 
-    secure: false,       // Localhost pe HTTP hota hai, isliye false
-    sameSite: 'lax',     // Local routing aur auth ke liye 'lax' perfect hai
+    secure: process.env.NODE_ENV === 'production', // Live par HTTPS hoga toh true, local par false
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Frontend aur Backend alag domain par chalne ke liye
     maxAge: 24 * 60 * 60 * 1000 
   }
 }));
@@ -34,11 +35,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// 2. CORS Configuration (Sirf aapke local Vite frontend ke liye)
+// 2. CORS Configuration (Sabhi links ko allow karne ke liye * use kiya hai taaki koi error na aaye)
 app.use(cors({
-  origin: "http://localhost:5173", // Aapka frontend local port
+  origin: true, // Yeh automatic aapke frontend ke URL ko accept kar lega
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true,               // Cookies/Sessions pass karne ke liye zaroori hai
+  credentials: true, 
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
 }));
 
@@ -75,11 +76,14 @@ app.use('/api/v1/cart', CartRoutes)
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/order', orderRoutes)
 
-app.get("/", (req, res) => res.send("ElectroMart API is live on Localhost."))
+app.get("/", (req, res) => res.send("ElectroMart API is live on Vercel."))
 
-// 4. Server Start (Bina kisi condition ke seedha listen karega)
-app.listen(PORT, () => {
-    console.log(`Server is running locally on http://localhost:${PORT}`);
-});
+// 4. Server Start (Vercel bina app.listen ke chalta hai, isliye isko condition me daal diya)
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 8000;
+    app.listen(PORT, () => {
+        console.log(`Server is running locally on http://localhost:${PORT}`);
+    });
+}
 
 export default app;
