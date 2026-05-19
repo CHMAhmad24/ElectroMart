@@ -6,7 +6,7 @@ import { Button } from './ui/button'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '@/ReduxToolkit/userSlice'
-import {clearProductState} from '@/ReduxToolkit/productSlice'
+import { clearProductState } from '@/ReduxToolkit/productSlice'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -16,7 +16,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = localStorage.getItem('accessToken')
   const admin = user?.role === "admin";
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,13 +36,18 @@ const Navbar = () => {
         dispatch(setUser(null));
         toast.success("Logout Successful");
         dispatch(clearProductState());
-        
+
         localStorage.clear();
         navigate('/login');
         setIsOpen(false);
       }
     } catch (error) {
-      console.log("Logout Error:", error);
+      console.log("Logout Error, clearing local states:", error);
+      // Fallback fallback mechanism
+      dispatch(setUser(null));
+      dispatch(clearProductState());
+      localStorage.clear();
+      navigate('/login');
     } finally {
       setLoading(false);
     }

@@ -138,7 +138,7 @@ export const login = async (req, res) => {
                 message: "Email and Password are required"
             });
         }
-        
+
         const existingUser = await User.findOne({ email });
 
         if (!existingUser) {
@@ -164,8 +164,8 @@ export const login = async (req, res) => {
         }
 
         // 2. Token Generation (Logic corrected: Access 1d, Refresh 7d)
-        const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
-        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '7d' });
+        const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1m' });
+        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1m' });
 
         existingUser.isLoggedIn = true;
         await existingUser.save();
@@ -183,8 +183,8 @@ export const login = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: `Login successful. Welcome back ${existingUser.firstName} || ${existingUser.username}`,
-            user: userResponse, // Ab clean object jayega
+            message: `Login successful. Welcome back ` && `${existingUser.firstName}` || ` ${existingUser.username}`,
+            user: userResponse,
             accessToken,
             refreshToken
         });
@@ -511,9 +511,9 @@ export const toggleSubscription = async (req, res) => {
                 message: "User not found"
             });
         }
-        
+
         foundUser.isSubscribed = !foundUser.isSubscribed;
-        
+
         await foundUser.save();
 
         return res.status(200).json({
