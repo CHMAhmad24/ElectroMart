@@ -4,9 +4,6 @@ import { useDispatch } from 'react-redux'
 import { jwtDecode } from 'jwt-decode'
 import { setUser } from '@/ReduxToolkit/userSlice'
 import { clearProductState } from '@/ReduxToolkit/productSlice'
-
-import Signup from './pages/Signup'
-import Login from './pages/Login'
 import Verify from './pages/Verify'
 import VerifyEmail from './pages/VerifyEmail'
 import Home from './pages/Home'
@@ -41,23 +38,23 @@ const RootLayout = () => {
     const checkTokenCron = () => {
       const currentToken = localStorage.getItem('accessToken');
 
+      // Agar token nahi hai toh agay code mat chalao (Bina wajah crash nahi hoga)
       if (!currentToken) return;
 
       try {
         const decodedToken = jwtDecode(currentToken);
         const currentTime = Date.now() / 1000; // Seconds
 
-        // if token is expired 
+        // If token is expired 
         if (decodedToken.exp < currentTime) {
-          clearInterval(tokenCheckInterval);
-
+          // ✅ Fix: Loop ke andar se clearInterval hata diya taaki undefined error na aaye
           dispatch(setUser(null));
           dispatch(clearProductState());
           localStorage.clear();
           navigate('/login');
 
           setTimeout(() => {
-            toast.error("Your session has expired, Please log in again.")
+            toast.error("Your session has expired, Please log in again.");
           }, 200);
         }
       } catch (error) {
@@ -69,15 +66,17 @@ const RootLayout = () => {
       }
     };
 
+    // Page load ya refresh par foran check karein
     checkTokenCron();
 
-    // Har 2 second ke interval par backend cron behavior chalayein (fast tracing)
+    // Har 2 second baad background loop chalayein
     const tokenCheckInterval = setInterval(checkTokenCron, 2000);
 
+    // ✅ Clean up interval properly on component unmount
     return () => clearInterval(tokenCheckInterval);
   }, [dispatch, navigate]);
 
-  return <Outlet />; // Yeh routes ke items ko screen par render karega
+  return <Outlet />; // Yeh child routes ko smoothly render karega
 };
 
 const router = createBrowserRouter([
@@ -142,7 +141,7 @@ const router = createBrowserRouter([
         element: <ProtectedRoute adminOnly={true}><Navbar /><Dashboard /></ProtectedRoute>,
         children: [
           {
-            path: "/FrontEnd/sales",
+            path: "sales", // ✅ Fix: Yahan "/FrontEnd/sales" ko clean karke "sales" kiya taaki dashboard routing breakdown na ho
             element: <><AdminSales /></>
           },
           {
@@ -179,4 +178,4 @@ const App = () => {
   return <RouterProvider router={router} />
 }
 
-export default App
+export default App;
