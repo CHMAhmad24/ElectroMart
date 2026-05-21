@@ -164,12 +164,12 @@ export const login = async (req, res) => {
         }
 
         // 2. Token Generation (Logic corrected: Access 1d, Refresh 7d)
-        const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1m' });
-        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1m' });
+        const accessToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
+        const refreshToken = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, { expiresIn: '5d' });
 
         existingUser.isLoggedIn = true;
         await existingUser.save();
-
+ 
         // Session management
         await Session.deleteOne({ userId: existingUser._id });
         await Session.create({ userId: existingUser._id });
@@ -183,7 +183,7 @@ export const login = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: `Login successful. Welcome back ` && `${existingUser.firstName}` || ` ${existingUser.username}`,
+            message: `Login successful. Welcome back ${existingUser.firstName || existingUser.username || "User"}`,
             user: userResponse,
             accessToken,
             refreshToken

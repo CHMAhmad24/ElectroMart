@@ -338,7 +338,7 @@ const AddressForm = () => {
                     </div>
 
                     {/* Right Side: Order Summary */}
-                    <div className='w-full lg:w-[400px] lg:sticky lg:top-28'>
+                    <div className='w-full lg:w-100 lg:sticky lg:top-28'>
                         <Card className="shadow-sm">
                             <CardHeader className="bg-gray-50/50">
                                 <CardTitle>Order Summary</CardTitle>

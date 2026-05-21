@@ -15,19 +15,20 @@ import './Models/orderModel.js';
 import './Models/productModel.js';
 
 const app = express()
+const PORT = process.env.PORT || 8000
+
+app.set("trust proxy", 1);
 
 app.use(express.json())
 
-// 1. Session Configuration (Vercel/Production proxy ke liye trust proxy zaroori hai)
-app.set("trust proxy", 1); 
-
 app.use(session({
-  secret: process.env.SECRET_KEY || 'your_local_secret_key',
+  secret: process.env.SECRET_KEY,
   resave: false,
-  saveUninitialized: false, 
+  saveUninitialized: true,
+  proxy: true,
   cookie: { 
-    secure: process.env.NODE_ENV === 'production', // Live par HTTPS hoga toh true, local par false
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Frontend aur Backend alag domain par chalne ke liye
+    secure: true,
+    sameSite: 'none',
     maxAge: 24 * 60 * 60 * 1000 
   }
 }));
@@ -35,28 +36,27 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// 2. CORS Configuration (Sabhi links ko allow karne ke liye * use kiya hai taaki koi error na aaye)
 app.use(cors({
-  origin: true, // Yeh automatic aapke frontend ke URL ko accept kar lega
+  origin: "https://electro-mart-shop.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true, 
+  credentials: true,
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
 }));
 
-// 3. MongoDB Connection
 let isConnected = false
 const connectToDB = async () => {
     if (isConnected) return;
     try {
+        // Reduced timeout so it doesn't hang forever
         await mongoose.connect(process.env.MONGO_URI, {
             dbName: 'ElectroMartDB',
             serverSelectionTimeoutMS: 5000 
         });
         isConnected = true;
-        console.log("MongoDB connected successfully");
+        console.log("MongoDB connected");
     } catch (error) {
         console.error("MongoDB connection error:", error);
-        throw error;
+        throw error; // Throw so the middleware can catch it
     }
 };
 
@@ -69,21 +69,12 @@ app.use(async (req, res, next) => {
     }
 });
 
-// Routes
 app.use('/api/v1/user', userRoute)
 app.use('/api/v1/products', ProductsRoutes)
 app.use('/api/v1/cart', CartRoutes)
 app.use('/api/v1/auth', authRoute)
 app.use('/api/v1/order', orderRoutes)
 
-app.get("/", (req, res) => res.send("ElectroMart API is live on Vercel."))
-
-// 4. Server Start (Vercel bina app.listen ke chalta hai, isliye isko condition me daal diya)
-if (process.env.NODE_ENV !== 'production') {
-    const PORT = process.env.PORT || 8000;
-    app.listen(PORT, () => {
-        console.log(`Server is running locally on http://localhost:${PORT}`);
-    });
-}
-
+// do not use app.listen() in vercel
+app.get("/", (req, res) => res.send("ElectroMart API is live and connected."))
 export default app;

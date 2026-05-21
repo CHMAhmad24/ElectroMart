@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import axios from 'axios'
-import { Edit, Eye, Search, Users } from 'lucide-react'
+import { Edit, Eye, Loader2, Search, Users } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import UserLogo from "../../Assets/User-png.webp"
 import { Button } from '@/components/ui/button'
@@ -12,6 +12,7 @@ const AdminUsers = () => {
   const [users, setUesrs] = useState([])
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState("")
+  const [loading, setLoading] = useState(true);
 
   const filteredUsers = users.filter((user) =>
     `${user.firstName} ${user.lastName} ${user.username}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -21,6 +22,7 @@ const AdminUsers = () => {
   const getAllUsers = async () => {
     const accessToken = localStorage.getItem("accessToken")
     try {
+      setLoading(true);
       const res = await axios.get(`${BACKEND_URL}/api/v1/user/allUsers`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -31,12 +33,21 @@ const AdminUsers = () => {
       }
     } catch (error) {
       console.log(error)
+    }finally{
+      setLoading(false);
     }
   }
 
   useEffect(() => {
-    getAllUsers() /* eslint-disable react-hooks/exhaustive-deps */
+    getAllUsers() 
   }, [])
+
+  if (loading) return (
+      <div className='flex flex-col items-center justify-center min-h-screen lg:pl-80'>
+        <Loader2 className='animate-spin text-blue-600 h-10 w-10' />
+        <p className='text-gray-500 mt-4 font-medium'>Loading Users ...</p>
+      </div>
+    )
 
   return (
     <div className='bg-white lg:pl-80 xl:pl-80 py-20 md:py-25 pr-4 md:pr-10 xl:pr-20 px-4 transition-all duration-300'>
